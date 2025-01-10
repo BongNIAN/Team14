@@ -6,11 +6,11 @@
 
 ---
 
-### **프로젝트 개요**:
+## **프로젝트 개요**:
 
 ---
 
-#### **클래스 다이어그램** : 
+## **클래스 다이어그램** : 
 ![image](https://github.com/user-attachments/assets/618106a3-992a-43ac-9433-de76e57ec0c1)
 
 
@@ -18,7 +18,7 @@
 
 ---
 
-**해당 프로젝트를 통해 얻고자 하는것**  : 
+# **해당 프로젝트를 통해 얻고자 하는것**  : 
 
 클래스 다이어그램에 익숙해진다.
 
@@ -37,5 +37,5 @@ Git Branch전략을 사용해본다.
 
 ---
 
-###### **Commit 규칙**
+## **Commit 규칙**
 ![image](https://github.com/user-attachments/assets/eb6368e3-7d29-44d1-b589-f5a4b5a9cd73)
