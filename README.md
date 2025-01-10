@@ -4,7 +4,7 @@
 
 ##### 프로젝트 이름 : 아직 없음. 
 
-![image](https://github.com/user-attachments/assets/eb6368e3-7d29-44d1-b589-f5a4b5a9cd73)
+
 
 -----------------------------------------
 
@@ -35,3 +35,6 @@ Git Branch전략을 사용해본다.
 
 
 헤더파일을 사용해본다.
+
+##### Commit 규칙
+![image](https://github.com/user-attachments/assets/eb6368e3-7d29-44d1-b589-f5a4b5a9cd73)
