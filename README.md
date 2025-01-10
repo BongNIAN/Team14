@@ -11,7 +11,8 @@
 GitHub 사용을 해본다. 
 Git Branch전략을 사용해본다. 
  1. 각자의 class별로 push 및 merge a Git Brach into Master
- 2. main 
+ 2. main(Master)로 가기 위해 충돌을 어떻게 해결하는지 알 수 있다.
+
 
 
 
