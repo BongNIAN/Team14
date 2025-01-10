@@ -48,4 +48,4 @@ Git Branch전략을 사용해본다.
 TeamName : 
 봉원명
 김승환
-
+곽연진
