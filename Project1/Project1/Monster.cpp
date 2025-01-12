@@ -7,14 +7,16 @@
 
 using namespace std;
 
-class Item {
+class Item 
+{
 public:
     virtual string GetName() const = 0;
     virtual void use() = 0;
     virtual ~Item() = default;
 };
 
-class HealthPotion :public Item {
+class HealthPotion :public Item 
+{
 public:
     HealthPotion() : name("HealthPotion"), HealthRestore(50) {}
     void use()
@@ -51,7 +53,8 @@ private:
 };
 
 
-class ItemForQuest :public Item {
+class ItemForQuest :public Item 
+{
 public:
     ItemForQuest() : name("ItemForQuest") {}
     string GetName() const
@@ -59,7 +62,8 @@ public:
         return this->name;
     }
 
-    void use() {
+    void use() 
+    {
         cout << "ItemForQuest" << endl;
     };
 
@@ -67,10 +71,12 @@ private:
     string name;
 };
 
-class Antidote :public Item {
+class Antidote :public Item
+{
 public:
 
-    void use() {
+    void use() 
+    {
         cout << "해독제 리턴값 1 or true" << endl;
     };
 private:
@@ -96,9 +102,9 @@ int GenerateRandom(int min, int max)
 //Percent
 bool IsCreateEvent(int percent)
 {
-    int sample = GenerateRandom(0, 99);
+    int tmp = GenerateRandom(0, 99);
 
-    if (sample < percent) {
+    if (tmp < percent) {
 
         return true;
 
@@ -108,7 +114,8 @@ bool IsCreateEvent(int percent)
     return false;
 }
 
-string CreateGradeByCDF() {
+string CreateGradeByCDF() 
+{
 
     const vector<pair<int, string>> grade =
     {
@@ -178,7 +185,8 @@ public:
 
     shared_ptr<Item> DropItem() override
     {
-        if (IsCreateEvent(30)) {
+        if (IsCreateEvent(30)) 
+        {
             if (IsCreateEvent(50))
             {
                 return make_shared<HealthPotion>();
@@ -202,7 +210,8 @@ private:
 };
 
 //Create MonsterClass
-class Troll : public Monster {
+class Troll : public Monster 
+{
 public:
     Troll(int level)
     {
@@ -210,24 +219,29 @@ public:
         Health = level * GenerateRandom(20, 30);
         Attack = level * GenerateRandom(5, 10);
     }
-    string GetName() const override {
+    string GetName() const override 
+    {
         return Name;
     }
 
-    int GetHealth() const override {
+    int GetHealth() const override 
+    {
         return Health;
     }
 
-    int GetAttack() const override {
+    int GetAttack() const override 
+    {
         return Attack;
     }
 
-    void TakeDamage(int damage) override {
+    void TakeDamage(int damage) override 
+    {
         Health -= damage;
         cout << "Troll took " << damage << " damage. Remaining health: " << Health << endl;
     }
 
-    shared_ptr<Item> DropItem() override {
+    shared_ptr<Item> DropItem() override 
+    {
         if (IsCreateEvent(30)) {
             if (IsCreateEvent(50))
             {
@@ -252,7 +266,8 @@ private:
 };
 
 //Create MonsterClass
-class Orc : public Monster {
+class Orc : public Monster 
+{
 public:
     Orc(int level)
     {
@@ -261,25 +276,31 @@ public:
         Attack = level * GenerateRandom(5, 10);
     }
 
-    string GetName() const override {
+    string GetName() const override
+    {
         return Name;
     }
 
-    int GetHealth() const override {
+    int GetHealth() const override 
+    {
         return Health;
     }
 
-    int GetAttack() const override {
+    int GetAttack() const override 
+    {
         return Attack;
     }
 
-    void TakeDamage(int damage) override {
+    void TakeDamage(int damage) override 
+    {
         Health -= damage;
         cout << "Orc took " << damage << " damage. Remaining health: " << Health << endl;
     }
 
-    shared_ptr<Item> DropItem() override {
-        if (IsCreateEvent(30)) {
+    shared_ptr<Item> DropItem() override 
+    {
+        if (IsCreateEvent(30)) 
+        {
             if (IsCreateEvent(50))
             {
                 return make_shared<HealthPotion>();
@@ -303,7 +324,8 @@ private:
 };
 
 //Create Abs Class
-class MonsterDecorator : public Monster {
+class MonsterDecorator : public Monster 
+{
 public:
     MonsterDecorator(shared_ptr<Monster> m) : monster(m) {}
 
@@ -317,7 +339,8 @@ protected:
 };
 
 //Decorate Monster 
-class BossMonster : public MonsterDecorator {
+class BossMonster : public MonsterDecorator 
+{
 public:
     BossMonster(shared_ptr<Monster> m) : MonsterDecorator(m)
     {
@@ -328,35 +351,43 @@ public:
         cout << "BossAttack :     " << this->Attack << endl;
     }
 
-    string GetName() const override {
+    string GetName() const override 
+    {
         return Name;
     }
 
-    int GetHealth() const override {
+    int GetHealth() const override 
+    {
         return Health;
     }
 
-    int GetAttack() const override {
+    int GetAttack() const override 
+    {
         return Attack;
     }
 
-    void TakeDamage(int damage) override {
+    void TakeDamage(int damage) override 
+    {
         Health -= damage;
         cout << "Boss took " << damage << " damage. Remaining health: " << Health << endl;
     }
 
-    shared_ptr<Item> DropItem() override {
+    shared_ptr<Item> DropItem() override
+    {
         if (IsCreateEvent(10))
         {
             cout << "QuestItem" << endl;
             return make_shared<ItemForQuest>();
         }
-        else {
-            if (IsCreateEvent(50)) {
+        else 
+        {
+            if (IsCreateEvent(50)) 
+            {
                 cout << "HealthPotion" << endl;
                 return make_shared<HealthPotion>();
             }
-            if (IsCreateEvent(40)) {
+            if (IsCreateEvent(40)) 
+            {
                 cout << "AttackBoost" << endl;
                 return make_shared<AttackBoost>();
             }
@@ -375,7 +406,8 @@ private:
 };
 
 //Decorate Monster
-class PoisonMonster : public MonsterDecorator {
+class PoisonMonster : public MonsterDecorator 
+{
 public:
     PoisonMonster(shared_ptr<Monster> m) : MonsterDecorator(m)
     {
@@ -386,15 +418,18 @@ public:
         cout << "BossAttack :     " << this->Attack << endl;
     }
 
-    string GetName() const override {
+    string GetName() const override 
+    {
         return  Name;
     }
 
-    int GetHealth() const override {
+    int GetHealth() const override 
+    {
         return Health;
     }
 
-    int GetAttack() const override {
+    int GetAttack() const override 
+    {
 
         if (IsCreateEvent(10))
         {
@@ -420,23 +455,28 @@ public:
     }
   */
 
-    void TakeDamage(int damage) override {
+    void TakeDamage(int damage) override 
+    {
         Health -= damage;
         cout << "Boss took " << damage << " damage. Remaining health: " << Health << endl;
     }
 
-    shared_ptr<Item> DropItem() override {
+    shared_ptr<Item> DropItem() override 
+    {
         if (IsCreateEvent(10))
         {
             cout << "QuestItem" << endl;
             return make_shared<ItemForQuest>();
         }
-        else {
-            if (IsCreateEvent(50)) {
+        else 
+        {
+            if (IsCreateEvent(50)) 
+            {
                 cout << "HealthPotion" << endl;
                 return make_shared<HealthPotion>();
             }
-            if (IsCreateEvent(40)) {
+            if (IsCreateEvent(40)) 
+            {
                 cout << "AttackBoost" << endl;
                 return make_shared<AttackBoost>();
             }
@@ -457,7 +497,8 @@ private:
 };
 
 //Create Factory Interface
-class IMonsterFactory {
+class IMonsterFactory 
+{
 public:
 
     virtual shared_ptr<Monster> CreateMonster(int level) const = 0;
@@ -465,7 +506,8 @@ public:
 };
 
 //Create BossFactory Interface
-class IBossMonsterFactory {
+class IBossMonsterFactory 
+{
 public:
 
     virtual shared_ptr<Monster> CreateBossMonster(int level) const = 0;
