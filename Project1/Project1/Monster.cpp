@@ -327,27 +327,47 @@ private:
 class MonsterDecorator : public Monster 
 {
 public:
-    MonsterDecorator(shared_ptr<Monster> m) : monster(m) {}
+    MonsterDecorator(shared_ptr<Monster> m) : monster(move(m)) {}
 
     virtual ~MonsterDecorator()
     {
         cout << " byebyeDecorator" << endl;
+    }
+    string GetName() const override {
+        return monster->GetName();
+    }
+
+    int GetHealth() const override {
+        return monster->GetHealth();
+    }
+
+    int GetAttack() const override {
+        return monster->GetAttack();
+    }
+
+    void TakeDamage(int damage) override {
+        monster->TakeDamage(damage);
+    }
+
+    shared_ptr<Item> DropItem() override {
+        return monster->DropItem();
     }
 
 protected:
     shared_ptr<Monster> monster;
 };
 
+
 //Decorate Monster 
 class BossMonster : public MonsterDecorator 
 {
 public:
-    BossMonster(shared_ptr<Monster> m) : MonsterDecorator(m)
+    BossMonster(shared_ptr<Monster> m) : MonsterDecorator(move(m))
     {
-        cout << "monsterAttack :     " << m->GetAttack() << endl;
-        this->Name = "Boss" + m->GetName();
-        this->Attack = static_cast <int> (m->GetAttack() * 1.5);
-        this->Health = static_cast <int> (m->GetHealth() * 1.5);
+       /* cout << "monsterAttack :     " << m->GetAttack() << endl;*/
+        this->Name = "Boss" + monster->GetName();
+        this->Attack = static_cast <int> (monster->GetAttack() * 1.5);
+        this->Health = static_cast <int> (monster->GetHealth() * 1.5);
         cout << "BossAttack :     " << this->Attack << endl;
     }
 
@@ -409,13 +429,13 @@ private:
 class PoisonMonster : public MonsterDecorator 
 {
 public:
-    PoisonMonster(shared_ptr<Monster> m) : MonsterDecorator(m)
+    PoisonMonster(shared_ptr<Monster> m) : MonsterDecorator(move(m))
     {
-        cout << "monsterAttack :     " << m->GetAttack() << endl;
-        Name = "Poison" + m->GetName();
-        Attack = m->GetAttack();
-        Health = m->GetAttack();
-        cout << "BossAttack :     " << this->Attack << endl;
+        cout << "monsterAttack :     " <<monster->GetAttack() << endl;
+        Name = "Poison" + monster->GetName();
+        Attack = monster->GetAttack();
+        Health = monster->GetAttack();
+        cout << "PoisonAttack :     " << this->Attack << endl;
     }
 
     string GetName() const override 
@@ -514,7 +534,7 @@ public:
     virtual ~IBossMonsterFactory() = default;
 };
 
-shared_ptr<Monster> CreateMonster(int level)
+shared_ptr<Monster> CreateMonsterFunc(int level)
 {
     shared_ptr<Monster> tmp;
 
@@ -556,7 +576,7 @@ public:
 
         int IsPoison = GenerateRandom(1, 10);
 
-        tmp = CreateMonster(level);
+        tmp = CreateMonsterFunc(level);
 
         //1~10중 1이 걸리면 10%
         if (IsPoison == 1)
@@ -582,7 +602,7 @@ public:
         int MonsterType = GenerateRandom(0, 2);
 
 
-        tmp = CreateMonster(level);
+        tmp = CreateMonsterFunc(level);
 
         //1~10중 1이 걸리면 10%
 
@@ -602,9 +622,14 @@ int main() {
     cout << "Hello" << endl;
 
     BossMonsterFactory boss;
+    MonsterFactory monst;
     for (int i = 0; i < 100; i++)
     {
         boss.CreateBossMonster(i);
+    }
+    for (int i = 0; i < 100; i++)
+    {
+        monst.CreateMonster(i);
     }
 
     return 0;
