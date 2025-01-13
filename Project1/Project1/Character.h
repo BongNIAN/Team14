@@ -38,6 +38,9 @@ public:
     int getHP();
     int getATK();
 
+    void increaseGold(int amount);
+    void decreaseGold(int amount);
+
     void addItem(Item* newItem, int quantity = 1);
     void useItem(int index);
     void displayInventory();
