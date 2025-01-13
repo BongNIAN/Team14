@@ -40,6 +40,7 @@ public:
 
     void increaseGold(int amount);
     void decreaseGold(int amount);
+    int getGold() const;
 
     void addItem(Item* newItem, int quantity = 1);
     void useItem(int index);

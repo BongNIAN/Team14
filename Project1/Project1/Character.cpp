@@ -63,7 +63,7 @@ int Character::getATK() {
 }
 
 // ∞ÒµÂ ∞®º“
-void decreaseGold(int amount) {
+void Character::decreaseGold(int amount) {
     if (gold >= amount) {
         gold -= amount;
     }
@@ -73,12 +73,12 @@ void decreaseGold(int amount) {
 }
 
 // ∞ÒµÂ ¡ı∞°
-void increaseGold(int amount) {
+void Character::increaseGold(int amount) {
     gold += amount;
 }
 
 // ∞ÒµÂ π›»Ø
-int getGold() const {
+int Character::getGold() const {
     return gold;
 }
 
