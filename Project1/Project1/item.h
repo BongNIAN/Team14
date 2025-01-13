@@ -1,62 +1,48 @@
-
 #ifndef ITEM_H
 #define ITEM_H
 
 #include <string>
 #include <iostream>
-#include <memory>
-using namespace std;
+#include <limits>
+#include "character.h"
 
-/** Base Item Class */
+// 아이템 등급 열거형
+enum class ItemGrade { S, A, B, C };
+
+// 추상 클래스 Item 정의
 class Item {
+protected:
+    std::string name;   // 아이템 이름
+    ItemGrade grade;    // 아이템 등급
+
 public:
-    virtual string GetName() const = 0;
-    virtual void use() = 0;
-    virtual ~Item() = default;
+    // 생성자
+    Item(const std::string& itemName, ItemGrade itemGrade);
+
+    // 가상 소멸자
+    virtual ~Item();
+
+    // 순수 가상 함수: 아이템 사용
+    virtual void use(Character* character, int level) = 0;
+
+    // 아이템 이름 반환
+    std::string getName() const;
+
+    // 아이템 등급 반환
+    ItemGrade getGrade() const;
 };
 
-/** HealthPotion Class */
-class HealthPotion : public Item {
+// 공격력 증가 포션 클래스 정의
+class AttackPotion : public Item {
 public:
-    HealthPotion();
-    void use() override;
-    string GetName() const override;
+    // 생성자
+    AttackPotion(ItemGrade itemGrade);
 
-private:
-    string name;
-    int HealthRestore;
-};
+    // 아이템 사용 메서드
+    void use(Character* character, int level) override;
 
-/** AttackBoost Class */
-class AttackBoost : public Item {
-public:
-    AttackBoost();
-    void use() override;
-    string GetName() const override;
-
-private:
-    string name;
-    int AttackIncrease;
-};
-
-/** ItemForQuest Class */
-class ItemForQuest : public Item {
-public:
-    ItemForQuest();
-    void use() override;
-    string GetName() const override;
-
-private:
-    string name;
-};
-
-/** Antidote Class */
-class Antidote : public Item {
-public:
-    void use() override;
-
-private:
-    string name;
+    // 아이템 등급 문자열 반환
+    std::string getGradeString() const;
 };
 
 #endif // ITEM_H
