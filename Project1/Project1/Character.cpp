@@ -62,6 +62,26 @@ int Character::getATK() {
     return attack;
 }
 
+// 골드 감소
+void decreaseGold(int amount) {
+    if (gold >= amount) {
+        gold -= amount;
+    }
+    else {
+        std::cout << "Not enough gold.\n";
+    }
+}
+
+// 골드 증가
+void increaseGold(int amount) {
+    gold += amount;
+}
+
+// 골드 반환
+int getGold() const {
+    return gold;
+}
+
 void Character::addItem(Item* newItem, int quantity) {
     itemManager->addItem(newItem, quantity);
 }
@@ -79,7 +99,7 @@ void Character::deleteItem(Item* itemToDelete) {
 }
 
 void Character::visitShop() {
-    std::cout << "상점에 어서와!" << std::endl;
+    std::cout << "welcome to the shop" << std::endl;
 }
 
 bool Character::isPoison() {
