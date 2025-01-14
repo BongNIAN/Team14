@@ -121,3 +121,7 @@ void ItemManager::deleteItem(std::shared_ptr<Item> itemToDelete) {
 
     }
 }
+
+std::vector<std::shared_ptr<Item>> ItemManager::getInventory() {
+    return inventory;
+}

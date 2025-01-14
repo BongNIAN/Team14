@@ -56,7 +56,8 @@ public:
     int getATK() const;
     int getGold() const;
     int getEXP() const; //추가
-
+    std::vector<std::shared_ptr<Item>> getInventory() const; 
+    
     // 골드 조작
     void decreaseGold(int amount);
     void increaseGold(int amount);
@@ -67,6 +68,8 @@ public:
     void useItem(int index);
     void displayInventory() const;
     void deleteItem(std::shared_ptr<Item> itemToDelete);
+
+   
 
     // 상점 방문
     void visitShop() const;
