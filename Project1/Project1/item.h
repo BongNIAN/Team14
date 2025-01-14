@@ -1,87 +1,68 @@
-#ifndef ITEM_H
-#define ITEM_H
-
-#include <string>
-#include <iostream>
-#include <memory>
-
-class Character;
-
-class Item {
-private:
-    std::string name;   // 아이템 이름
+#include "item.h"
+#include "character.h"
 
 
-public:
-   
+using namespace std;
 
 
-    // 가상 소멸자
-    virtual ~Item()=default;
 
-    // 순수 가상 함수: 아이템 사용
-    virtual void use(Character* character) = 0;
+AttackBoost::AttackBoost() : name("AttackBoost") {}
 
-    // 아이템 이름 반환
-    virtual std::string getName() const=0;
+// AttackPotion 클래스 아이템 사용 메서드
+void AttackBoost::use(Character* character) {
+    int level = character->getLevel();
 
-   
-};
-
-// 공격력 증가 포션 클래스 정의
-class AttackBoost : public Item {
-public:
-    // 생성자
-    AttackBoost();
-
-    // 아이템 사용 메서드
-    void use(Character* character) override;
-
-    // 아이템 등급 문자열 반환
-    std::string getName() const;
-
-private: 
-    std::string name;
-
-};
-
-class HealthPotion : public Item {
-public:
-    HealthPotion();
-
-    // 아이템 사용 메서드           
-    void use(Character* character) override;
-
-    // 아이템 등급 문자열 반환
-    std::string getName() const;
+    int bonus = level * 8;
 
 
-private:
-    std::string name;
 
-};
+    // 캐릭터에 효과 적용
+    character->increaseATK(bonus);
 
-class ItemForQuest :public Item
+    // 사용 메시지 출력
+    std::cout << name << " (등급: " << this->getName() << ")을(를) 사용했습니다!\n";
+}
+
+std::string AttackBoost::getName() const
 {
+    return this->name;
+}
 
-public:
-    ItemForQuest();
+HealthPotion::HealthPotion() : name("HealthPotion") {}
 
-    // 아이템 사용 메서드           
-    void use(Character* character) override;
+void HealthPotion::use(Character* character) {
+    if (character) {
+        // 캐릭터의 체력을 회복시키는 로직
+        int getLv = character->getLevel();
 
-    // 아이템 등급 문자열 반환
-    std::string getName() const;
+        character->increaseHP(getLv * 20);  // 체력 +50 (예시)
+        cout << "im HealthPotion cpp , :hp는 + " << getLv * 20 << endl;
+    }
+}
 
-private:
-    std::string name;
+string HealthPotion::getName() const {
+    return this->name;
+}
 
+ItemForQuest::ItemForQuest() : name("ItemForQuest") {}
 
-};
+void ItemForQuest::use(Character* character) {
+    if (character) {
+        // 특정 퀘스트를 위한 아이템 사용 로직
+        cout << "ItemForQuest used! Quest objective " << endl;
+    }
+}
 
-struct ItemCompare {
-    bool operator()(const std::shared_ptr<Item>& left, const std::shared_ptr<Item>& right) const;
-};
+string ItemForQuest::getName() const {
+    return this->name;
+}
 
+bool ItemCompare::operator()(const std::shared_ptr<Item>& left, const std::shared_ptr<Item>& right) const {
+    // 아이템 이름을 기준으로 비교
+    if (left->getName() == right->getName()) {
+        return false;
+    }
 
-#endif // ITEM_H
+    // 이름이 다를 경우 내림차순 비교
+    return left->getName() > right->getName();
+}

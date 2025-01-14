@@ -23,7 +23,7 @@ void AttackBoost::use(Character* character) {
     std::cout << name << " (등급: " << this->getName() << ")을(를) 사용했습니다!\n";
 }
 
-std::string AttackBoost::getName() const 
+std::string AttackBoost::getName() const
 {
     return this->name;
 }
@@ -35,8 +35,8 @@ void HealthPotion::use(Character* character) {
         // 캐릭터의 체력을 회복시키는 로직
         int getLv = character->getLevel();
 
-        character->increaseHP(getLv*20);  // 체력 +50 (예시)
-        cout << "im HealthPotion cpp , :hp는 + "<< getLv*20 << endl;
+        character->increaseHP(getLv * 20);  // 체력 +50 (예시)
+        cout << "im HealthPotion cpp , :hp는 + " << getLv * 20 << endl;
     }
 }
 

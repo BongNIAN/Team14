@@ -16,7 +16,7 @@ int main() {
         boss.CreateBossMonster(i);
     }
     for (int i = 0; i < 100; i++) {
-    
+
         shared_ptr<Monster> tmp = monst.CreateMonster(i);
         shared_ptr<Item> itemTmp;
         itemTmp = tmp->DropItem();
@@ -32,16 +32,16 @@ int main() {
 
 
     /*
-    * 현재 오름차순으로 정렬되어 있기 때문에 [0] = AttackBoost 
+    * 현재 오름차순으로 정렬되어 있기 때문에 [0] = AttackBoost
     * [1] = HealthPotion
-    * [2] = QuestForItem    
+    * [2] = QuestForItem
     **/
     c->displayStatus();
     c->useItem(0);
     c->displayStatus();
     c->useItem(2);
     c->displayStatus();
-    c->useItem(1); 
+    c->useItem(1);
     c->displayStatus();
     cout << "\n";
     c->displayInventory();
@@ -61,7 +61,7 @@ int main() {
 
     shared_ptr<Item> healthPotion = make_shared<HealthPotion>();
 
-    c->addItem(healthPotion,3);
+    c->addItem(healthPotion, 3);
 
     c->displayInventory();
 
@@ -94,7 +94,7 @@ int main() {
     c->displayStatus();
 
     ///승환님 TODO : 레벨업 관련 메서드 
-    
+
 
     return 0;
 }
