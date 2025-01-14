@@ -48,12 +48,14 @@ public:
     void increaseHP(int amount);
     void takeDamage(int damage);
     void increaseATK(int amount);
+    void setEXP(int exp); //추가
 
     // Getter
     int getLevel() const;
     int getHP() const;
     int getATK() const;
     int getGold() const;
+    int getEXP() const; //추가
 
     // 골드 조작
     void decreaseGold(int amount);

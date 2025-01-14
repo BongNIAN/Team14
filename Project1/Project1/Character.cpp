@@ -89,6 +89,11 @@ void Character::takeDamage(int damage) {
 void Character::increaseATK(int amount) {
     attack += amount;
 }
+// 추가: 경험치 set
+void Character::setEXP(int exp) {
+    experience = exp;
+}
+
 
 // Getter 메서드들
 int Character::getLevel() const {
@@ -106,6 +111,11 @@ int Character::getATK() const {
 int Character::getGold() const {
     return gold;
 }
+// 추가: 경험치 반환
+int Character::getEXP() const {
+    return experience;
+}
+
 
 // 골드 조작 메서드들
 void Character::decreaseGold(int amount) {
