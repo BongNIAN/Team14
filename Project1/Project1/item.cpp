@@ -6,7 +6,7 @@ using namespace std;
 
 
 
-AttackBoost::AttackBoost() : name("AttackBoost") {}
+AttackBoost::AttackBoost() : name("AttackBoost"), price(15) {}
 
 // AttackPotion 클래스 아이템 사용 메서드
 void AttackBoost::use(Character* character) {
@@ -28,7 +28,12 @@ std::string AttackBoost::getName() const
     return this->name;
 }
 
-HealthPotion::HealthPotion() : name("HealthPotion") {}
+int AttackBoost::getPrice() const 
+{
+    return this->price;
+}
+
+HealthPotion::HealthPotion() : name("HealthPotion"),price(10) {}
 
 void HealthPotion::use(Character* character) {
     if (character) {
@@ -44,7 +49,13 @@ string HealthPotion::getName() const {
     return this->name;
 }
 
-ItemForQuest::ItemForQuest() : name("ItemForQuest") {}
+int HealthPotion::getPrice() const
+{
+    return this->price;
+}
+
+
+ItemForQuest::ItemForQuest() : name("ItemForQuest") ,price(1){}
 
 void ItemForQuest::use(Character* character) {
     if (character) {
@@ -57,6 +68,11 @@ string ItemForQuest::getName() const {
     return this->name;
 }
 
+int ItemForQuest::getPrice() const
+{
+    return this->price;
+}
+
 bool ItemCompare::operator()(const std::shared_ptr<Item>& left, const std::shared_ptr<Item>& right) const {
     // 아이템 이름을 기준으로 비교
     if (left->getName() == right->getName()) {
@@ -66,3 +82,4 @@ bool ItemCompare::operator()(const std::shared_ptr<Item>& left, const std::share
     // 이름이 다를 경우 오름차순 비교
     return left->getName() > right->getName();
 }
+

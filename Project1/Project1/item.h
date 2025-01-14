@@ -10,7 +10,7 @@ class Character;
 class Item {
 private:
     std::string name;   // 아이템 이름
-
+    int price;
 
 public:
 
@@ -24,6 +24,7 @@ public:
 
     // 아이템 이름 반환
     virtual std::string getName() const = 0;
+    virtual int getPrice() const = 0;
 
 
 };
@@ -40,9 +41,11 @@ public:
     // 아이템 등급 문자열 반환
     std::string getName() const;
 
+    int getPrice() const;
+
 private:
     std::string name;
-
+    int price;
 };
 
 class HealthPotion : public Item {
@@ -55,10 +58,11 @@ public:
     // 아이템 등급 문자열 반환
     std::string getName() const;
 
+    int getPrice() const;
 
 private:
     std::string name;
-
+    int price;
 };
 
 class ItemForQuest :public Item
@@ -73,9 +77,12 @@ public:
     // 아이템 등급 문자열 반환
     std::string getName() const;
 
+    //수정해야함
+    int getPrice() const;
+
 private:
     std::string name;
-
+    int price;
 
 };
 
