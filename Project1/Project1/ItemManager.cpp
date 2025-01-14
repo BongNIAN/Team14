@@ -9,21 +9,17 @@
 void ItemManager::addItem(std::shared_ptr<Item> newItem, int quantity) {
     if (newItem != nullptr) {
 
-    if (itemQuantities.find(newItem) != itemQuantities.end()) {
-        itemQuantities[newItem] += quantity;
+        if (itemQuantities.find(newItem) != itemQuantities.end()) {
+            itemQuantities[newItem] += quantity;
+        }
+        else {
+            inventory.push_back(newItem);
+            itemQuantities[newItem] = quantity;
+        }
     }
-    else {
-        inventory.push_back(newItem);
-        itemQuantities[newItem] = quantity;
-    }
-}
     else { std::cout << "NewItem is NULL " << std::endl; }
 
-void ItemManager::useItem(int index, Character* character) {
-    if (index < 0 || index >= inventory.size()) {
-        std::cout << "아이템 사용할 수 없음." << std::endl;
-        return;
-    }
+}
 
 // 아이템 사용
 void ItemManager::useItem(int index, Character* character) {
@@ -89,11 +85,11 @@ void ItemManager::useItem(int index, Character* character) {
     // 아이템 이름을 기준으로 비교
     if (left->getName() == right->getName()) {
         return false;
-        }
+    }
 
     // 이름이 다를 경우 내림차순 비교
     return left->getName() > right->getName();
-        }
+}
 이 함수에서 left->getName() < right-<getName(); 으로 바꿔주시면 됩니다.
 */
 
@@ -122,6 +118,6 @@ void ItemManager::deleteItem(std::shared_ptr<Item> itemToDelete) {
     if (it != inventory.end()) {
         inventory.erase(it);
         itemQuantities.erase(itemToDelete);
-       
+
     }
 }

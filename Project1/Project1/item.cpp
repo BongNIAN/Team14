@@ -63,6 +63,6 @@ bool ItemCompare::operator()(const std::shared_ptr<Item>& left, const std::share
         return false;
     }
 
-    // 이름이 다를 경우 내림차순 비교
+    // 이름이 다를 경우 오름차순 비교
     return left->getName() > right->getName();
 }

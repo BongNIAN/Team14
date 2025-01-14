@@ -93,7 +93,8 @@ int main() {
     c->takeDamage(300);
     c->displayStatus();
 
-    ///½ÂÈ¯´Ô TODO : ·¹º§¾÷ °ü·Ã ¸Ş¼­µå 
+    c->~Character();
+   
 
 
     return 0;

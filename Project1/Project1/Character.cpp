@@ -35,7 +35,23 @@ void Character::destroyInstance() {
 
 // 소멸자
 Character::~Character() {
-    itemManager.reset();
+     
+    //HasitemManger 
+    if (itemManager) {
+        std::cout << "Before delete useCount : " << itemManager.use_count() << std::endl;
+
+        
+        itemManager.reset();
+
+        // use_count()가 0이 되었는지 확인
+        if (itemManager == nullptr) {
+            std::cout << "ItemManagerDelete" << std::endl;
+        }
+        else {
+            std::cout << "Error: ItemManager NO RESET " << std::endl;
+        }
+    }
+    
 }
 
 // 캐릭터 상태 출력
