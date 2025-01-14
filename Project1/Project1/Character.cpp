@@ -51,11 +51,11 @@ void Character::displayStatus() const {
 // 레벨 업
 void Character::levelUp() {
     if (level < maxLevel) {
-        maxHealth += level * 20;
-        attack += level * 5;
-        level++;
-        health = maxHealth;
-    }
+    maxHealth += level * 20;
+    attack += level * 5;
+    level++;
+    health = maxHealth;
+}
 }
 
 // 체력 증가
@@ -101,6 +101,7 @@ void Character::decreaseGold(int amount) {
     }
 }
 
+// 골드 증가
 void Character::increaseGold(int amount) {
     gold += amount;
 }

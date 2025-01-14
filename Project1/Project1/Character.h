@@ -58,6 +58,7 @@ public:
     // 골드 조작
     void decreaseGold(int amount);
     void increaseGold(int amount);
+    
 
     // 아이템 관리
     void addItem(std::shared_ptr<Item> newItem, int quantity = 1);
