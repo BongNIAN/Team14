@@ -1,5 +1,6 @@
 #include "random.h"
 #include "monster.h"
+#include "item.h" 
 
 using namespace std;
 
