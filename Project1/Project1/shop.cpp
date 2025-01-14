@@ -1,8 +1,7 @@
-#include <iostream>
-#include <memory>
-#include <algorithm>
-#include "Shop.h"
-
+#include "Shop.h" 
+#include "Character.h" 
+#include "Item.h" 
+#include <iostream> 
 
 
 Shop::Shop() {

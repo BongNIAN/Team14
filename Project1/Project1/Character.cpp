@@ -1,9 +1,9 @@
-
-
-#include "Character.h"
-#include "ItemManager.h"
-#include "item.h"
-#include <memory>
+#include "Character.h" 
+#include "ItemManager.h" 
+#include "Item.h" 
+#include "Observer.h" 
+#include <iostream> 
+#include <algorithm> 
 
 // 정적 멤버 초기화
 Character* Character::instance = nullptr;
@@ -54,6 +54,25 @@ Character::~Character() {
     
 }
 
+void Character::Attach(const std::shared_ptr<IPlayerObserver>& observer) {
+    observers.push_back(observer); // 옵저버를 리스트에 추가
+}
+
+void Character::Detach(const std::shared_ptr<IPlayerObserver>& observer) {
+    // 옵저버를 리스트에서 제거
+    observers.erase(std::remove(observers.begin(), observers.end(), observer), observers.end());
+}
+
+void Character::Notify() {
+    // 모든 옵저버에게 현재 상태를 알림
+    for (const auto& observer : observers) {
+        PlayerHp hp = { health, maxHealth }; 
+        observer->UpdatePlayer(hp);          // 옵저버의 UpdatePlayer 호출
+    }
+}
+
+
+
 // 캐릭터 상태 출력
 void Character::displayStatus() const {
     std::cout << "Name: " << name << std::endl;
@@ -77,12 +96,15 @@ void Character::levelUp() {
 // 체력 증가
 void Character::increaseHP(int amount) {
     health = std::min(health + amount, maxHealth);
+    PlayerHp hpp = { health,maxHealth };
+    Character::Notify();
 }
 
 // 데미지 처리
 void Character::takeDamage(int damage) {
     health -= damage;
     if (health < 0) health = 0;
+    Character::Notify();
 }
 
 // 공격력 증가
@@ -114,6 +136,10 @@ int Character::getGold() const {
 // 추가: 경험치 반환
 int Character::getEXP() const {
     return experience;
+}
+// 원명 추가 : MaxHp 반환메서드
+int Character::getMaxHp() const {
+    return maxHealth;
 }
 
 //추가: 플레이어 인벤토리 반환 
