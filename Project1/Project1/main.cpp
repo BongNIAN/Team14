@@ -3,6 +3,7 @@
 #include "random.h"
 #include "Character.h"
 #include "item.h"
+#include "shop.h"
 
 int main() {
     InitializeRandom();
@@ -12,10 +13,39 @@ int main() {
     MonsterFactory monst;
     int ItemCnt = 0;*/
 
-    cout << c->getEXP() << endl;
-    c->setEXP(30);
-    cout << c->getEXP() << endl;
+    Shop s;
    
+   bool check = true;
+   check =  s.buyItem(*c,1);
+
+   cout << "dfasdfasdfasdfasdfasf" << check << endl;
+
+   c->increaseGold(1000);
+   check = s.buyItem(*c, 1);
+   check = s.buyItem(*c, 1);
+   check = s.buyItem(*c, 1);
+   check = s.buyItem(*c, 1);
+   check = s.buyItem(*c, 1);
+
+   check = s.buyItem(*c, 1);
+   check = s.buyItem(*c, 1);
+   check = s.buyItem(*c, 1);
+   check = s.buyItem(*c, 2);
+   check = s.buyItem(*c, 100);
+   s.buyItem(*c, 200);
+   c->displayInventory();
+   cout << "12312312312312321312" << endl;
+   vector<shared_ptr<Item>> inven = c->getInventory();
+
+   cout << "inven size is  : " <<inven.size()<< endl;
+   
+   cout << "Inventory test" << endl;
+
+   for (int i = 0; i < inven.size(); i++)
+   {
+       inven[i]->use(c);
+   }
+
 
     return 0;
 }

@@ -23,6 +23,7 @@ public:
     void useItem(int index, Character* character);
     void displayInventory() const;
     void deleteItem(std::shared_ptr<Item> itemToDelete);
+    std::vector<std::shared_ptr<Item>> getInventory();
 };
 
 

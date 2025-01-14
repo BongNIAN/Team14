@@ -116,6 +116,12 @@ int Character::getEXP() const {
     return experience;
 }
 
+//추가: 플레이어 인벤토리 반환 
+std::vector<std::shared_ptr<Item>> Character::getInventory() const{
+    return itemManager->getInventory();
+}
+
+
 
 // 골드 조작 메서드들
 void Character::decreaseGold(int amount) {
