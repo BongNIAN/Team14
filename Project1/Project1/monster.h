@@ -2,11 +2,11 @@
 #ifndef MONSTER_H
 #define MONSTER_H
 
-#include <iostream>
+
 #include <string>
 #include <memory>
 #include "item.h"
-#include "random.h"
+
 using namespace std;
 
 /** Base Monster Class */

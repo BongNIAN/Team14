@@ -1,6 +1,6 @@
 
-#ifndef UTILITY_H
-#define UTILITY_H
+#ifndef RANDOM_H
+#define RANDOM_H
 
 #include <cstdlib>
 #include <ctime>

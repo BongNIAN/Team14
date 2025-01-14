@@ -1,8 +1,7 @@
-// ItemManager.cpp
 #include "ItemManager.h"
 #include "item.h"
 #include "Character.h"
-
+#include <iostream>
 
 
 // 아이템 추가

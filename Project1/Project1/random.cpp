@@ -1,4 +1,8 @@
 #include "random.h"
+#include <cstdlib> 
+#include <ctime> 
+#include <vector> 
+#include <string>
 
 void InitializeRandom() {
     srand(static_cast<unsigned int>(time(0)));

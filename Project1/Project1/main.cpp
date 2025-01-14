@@ -4,51 +4,72 @@
 #include "Character.h"
 #include "item.h"
 #include "shop.h"
+#include "print.h"
+#include "observer.h"
 
 int main() {
     InitializeRandom();
-
     Character* c = Character::getInstance("hero");
-   /* BossMonsterFactory boss;
-    MonsterFactory monst;
-    int ItemCnt = 0;*/
-
-    Shop s;
+    auto playerObserver = std::make_shared<PlayerObserver>();
+    auto gameOverHandler = std::make_shared<GameOverHandler>();
+    c->Attach(playerObserver);
+    c->Attach(gameOverHandler);
+    MonsterFactory mf;
+    shared_ptr<Monster> m = mf.CreateMonster(1);
+    
+    printMonsterTestModule(m);
+    c->takeDamage(170);
+    drawHpBar(c->getHP(), c->getMaxHp());
+    PrintLine("123213123");
+    printBattleWithMonster();
+    printBossMonster();
+    cout << GenerateRandom(1, 10) << endl;
+    c->takeDamage(30);
+    c->takeDamage(100);
    
-   bool check = true;
-   check =  s.buyItem(*c,1);
-
-   cout << "dfasdfasdfasdfasdfasf" << check << endl;
-
-   c->increaseGold(1000);
-   check = s.buyItem(*c, 1);
-   check = s.buyItem(*c, 1);
-   check = s.buyItem(*c, 1);
-   check = s.buyItem(*c, 1);
-   check = s.buyItem(*c, 1);
-
-   check = s.buyItem(*c, 1);
-   check = s.buyItem(*c, 1);
-   check = s.buyItem(*c, 1);
-   check = s.buyItem(*c, 2);
-   check = s.buyItem(*c, 100);
-   s.buyItem(*c, 200);
-   c->displayInventory();
-   cout << "12312312312312321312" << endl;
-   vector<shared_ptr<Item>> inven = c->getInventory();
-
-   cout << "inven size is  : " <<inven.size()<< endl;
-   
-   cout << "Inventory test" << endl;
-
-   for (int i = 0; i < inven.size(); i++)
-   {
-       inven[i]->use(c);
-   }
-
-
     return 0;
 }
+
+
+//Test Shop
+//Character* c = Character::getInstance("hero");
+///* BossMonsterFactory boss;
+// MonsterFactory monst;
+// int ItemCnt = 0;*/
+//
+//Shop s;
+//
+//bool check = true;
+//check = s.buyItem(*c, 1);
+//
+//cout << "dfasdfasdfasdfasdfasf" << check << endl;
+//
+//c->increaseGold(1000);
+//check = s.buyItem(*c, 1);
+//check = s.buyItem(*c, 1);
+//check = s.buyItem(*c, 1);
+//check = s.buyItem(*c, 1);
+//check = s.buyItem(*c, 1);
+//
+//check = s.buyItem(*c, 1);
+//check = s.buyItem(*c, 1);
+//check = s.buyItem(*c, 1);
+//check = s.buyItem(*c, 2);
+//check = s.buyItem(*c, 100);
+//s.buyItem(*c, 200);
+//c->displayInventory();
+//cout << "12312312312312321312" << endl;
+//vector<shared_ptr<Item>> inven = c->getInventory();
+//
+//cout << "inven size is  : " << inven.size() << endl;
+//
+//cout << "Inventory test" << endl;
+//
+//for (int i = 0; i < inven.size(); i++)
+//{
+//    inven[i]->use(c);
+//}
+
 
 
 
