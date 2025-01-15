@@ -64,8 +64,8 @@ void printBattleWithMonster() {
                  //       \\             /`    \      /    `\
                 //         \\           /       '----'       \
                ||    HERO   ||          ||      GOBLIN      ||
-               ||           ||          ||                 ||
-               ||           ||          ||                 ||
+               ||           ||          ||                  ||
+               ||           ||          ||                  ||
 )" << std::endl;
 }
 
@@ -86,6 +86,25 @@ void printMonsterTestModule(std::shared_ptr<Monster> m) {
     std::cout << "hp : " << m->GetHealth() << std::endl;
     std::cout << "attack : " << m->GetAttack() << std::endl;
     std::cout << "name : " << m->GetName() << std::endl;
+}
+void printDragon() 
+{
+    cout << R"(
+(  )   /\   _                 (     
+    \ |  (  \ ( \.(               )                      _____
+  \  \ \  `  `   ) \             (  ___                 / _   \
+ (_`    \+   . x  ( .\            \/   \____-----------/ (o)   \_
+- .-               \+  ;          (  O                           \____
+                          )        \_____________  `              \  /
+(__                +- .( -'.- <. - _  VVVVVVV VV V\                 \/
+(_____            ._._: <_ - <- _  (--  _AAAAAAA__A_/                  |
+  .    /./.+-  . .- /  +--  - .     \______________//_              \_______
+  (__ ' /x  / x _/ (                                  \___'          \     /
+ , x / ( '  . / .  /                                      |           \   /
+    /  /  _/ /    +                                      /              \/
+   '  (__/                                             /                  \
+        )" << endl;
+
 }
 
 void drawHpBar(int currentHp, int maxHp, int barLength) {
@@ -116,4 +135,10 @@ void drawHpBar(int currentHp, int maxHp, int barLength) {
     }
 
     std::cout << "HP: [" << hpBar << "] " << currentHp << "/" << maxHp << std::endl;
+}
+
+void cursorLocation(int x,int y) 
+{
+    COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }

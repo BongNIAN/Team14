@@ -22,6 +22,7 @@ void Shop::displayItems() const {
         std::cout << i + 1 << ". " << item->getName()
             << " (АЁАн: " << item->getPrice() << " Gold)\n";
     }
+
 }
 
 bool Shop::buyItem(Character& character, size_t itemIndex) {

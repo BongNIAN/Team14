@@ -42,6 +42,9 @@
     <ClCompile Include="observer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="battlemanager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="random.h">
@@ -66,6 +69,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="observer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="battlemanager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
