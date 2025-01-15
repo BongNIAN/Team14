@@ -31,7 +31,7 @@ private:
     int maxExp = 100;           // 최대 경험치
     int gold;                   // 골드 소지량
     int battleCount;            // 전투 횟수(스테이지 관리)
-    int statePoison = false;
+    bool IsPoison;
     std::shared_ptr<ItemManager> itemManager; // 아이템 관리자를 위한 포인터
     std::vector<std::shared_ptr<IPlayerObserver>> observers; // 옵저버 목록
 
@@ -95,7 +95,7 @@ public:
 
     // 독 상태 확인
     bool isPoison() const;
-
+    void setPoison(bool state);
     // Destructor
     ~Character();
 };

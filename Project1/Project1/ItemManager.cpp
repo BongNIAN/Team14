@@ -67,7 +67,7 @@ void ItemManager::deleteItem(std::shared_ptr<Item> itemToDelete, int quantity) {
             inventory.erase(vecIt);
         }
 
-        std::cout << itemToDelete->getName() << std::endl;
+      
     }
     else {
         // 수량 감소
