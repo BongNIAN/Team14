@@ -27,6 +27,7 @@ private:
     int experience;             // 현재 경험치
     int maxExp = 100;           // 최대 경험치
     int gold;                   // 골드 소지량
+    int battleCount;            // 전투 횟수(스테이지 관리)
     int statePoison = false;
     std::shared_ptr<ItemManager> itemManager; // 아이템 관리자를 위한 포인터
     std::vector<std::shared_ptr<IPlayerObserver>> observers; // 옵저버 목록
@@ -73,17 +74,21 @@ public:
     void decreaseGold(int amount);
     void increaseGold(int amount);
     
+    // 스테이지 관리
+    void increasebattleCount();
+    int getBattleCount() const;
+
 
     // 아이템 관리
     void addItem(std::shared_ptr<Item> newItem, int quantity = 1);
     void useItem(int index);
     void displayInventory() const;
-    void deleteItem(std::shared_ptr<Item> itemToDelete);
-
+    void deleteItem(std::shared_ptr<Item> itemToDelete, int quantity);
+    int getItemQuantity(std::shared_ptr<Item> item) const;
    
 
     // 상점 방문
-    void visitShop() const;
+    void visitShop();
 
     // 독 상태 확인
     bool isPoison() const;

@@ -1,6 +1,7 @@
 #include "battlemanager.h"
 #include "print.h"
 #include "random.h" 
+#include "stageManager.h"
 
 /** 혹시 오류생기면 교체할 모델입니다 삭제 노노!*/
 void BattleManager :: Battle(Character *c) 
@@ -117,6 +118,7 @@ void BattleManager :: Battle(Character *c)
 				cout << "탈출 성공 축하드려요 ㅎㅎ" << endl;
 				//이건 전투를 탈출하는거니깐  전투 전으로 
 				InvenSelection = 0;
+				fled = true;
 				break;
 			}
 			
@@ -129,6 +131,7 @@ void BattleManager :: Battle(Character *c)
 				CheckThrough = 100;
 				cout << "im BM , you die" << endl;
 				InvenSelection = 0;
+				fled = false;
 				break;
 			}
 
@@ -161,7 +164,15 @@ void BattleManager :: Battle(Character *c)
 
 
 		//얘가 가장먼저 돌아야함
-		if (CheckThrough==100 )break;
+		if (CheckThrough == 100) {
+			if (!fled) {
+				c->increasebattleCount(); //전투 횟수 증가
+
+				StageManager stageManager;
+				stageManager.checkStageUp(c); // 스테이지를 올릴지 확인
+			}
+			break;
+		}
 		
 	
 		
