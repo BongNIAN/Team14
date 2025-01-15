@@ -21,7 +21,8 @@ public:
     void addItem(std::shared_ptr<Item> newItem, int quantity = 1);
     void useItem(int index, Character* character);
     void displayInventory() const;
-    void deleteItem(std::shared_ptr<Item> itemToDelete);
+    void deleteItem(std::shared_ptr<Item> itemToDelete, int quantity);
+    int getItemQuantity(std::shared_ptr<Item> item) const;
     std::vector<std::shared_ptr<Item>> getInventory();
 };
 
