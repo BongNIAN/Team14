@@ -27,7 +27,12 @@ int Goblin::GetAttack() const {
 
 void Goblin::TakeDamage(int damage) {
     Health -= damage;
-    cout << "Goblin took " << damage << " damage. Remaining health: " << Health << endl;
+    if (Health <= 0)
+    {
+        Health = 0;
+    }
+
+    cout << Name <<"  took " << damage << " damage. Remaining health: " << Health << endl;
 }
 
 shared_ptr<Item> Goblin::DropItem() {
@@ -64,7 +69,13 @@ int Troll::GetAttack() const {
 
 void Troll::TakeDamage(int damage) {
     Health -= damage;
-    cout << "Troll took " << damage << " damage. Remaining health: " << Health << endl;
+    if (Health <= 0)
+    {
+        Health = 0;
+    }
+
+    cout << Name << "  took " << damage << " damage. Remaining health: " << Health << endl;
+
 }
 
 shared_ptr<Item> Troll::DropItem() {
@@ -101,7 +112,12 @@ int Orc::GetAttack() const {
 
 void Orc::TakeDamage(int damage) {
     Health -= damage;
-    cout << "Orc took " << damage << " damage. Remaining health: " << Health << endl;
+    if (Health <= 0)
+    {
+        Health = 0;
+    }
+
+    cout << Name << "  took " << damage << " damage. Remaining health: " << Health << endl;
 }
 
 shared_ptr<Item> Orc::DropItem() {
@@ -165,7 +181,12 @@ int BossMonster::GetAttack() const {
 
 void BossMonster::TakeDamage(int damage) {
     Health -= damage;
-    cout << "Boss took " << damage << " damage. Remaining health: " << Health << endl;
+    if (Health <= 0)
+    {
+        Health = 0;
+    }
+
+    cout << Name << "  took " << damage << " damage. Remaining health: " << Health << endl;
 }
 
 shared_ptr<Item> BossMonster::DropItem() {
@@ -211,7 +232,12 @@ int PoisonMonster::GetAttack() const {
 
 void PoisonMonster::TakeDamage(int damage) {
     Health -= damage;
-    cout << "PoisonMonster took " << damage << " damage. Remaining health: " << Health << endl;
+    if (Health <= 0)
+    {
+        Health = 0;
+    }
+
+    cout << Name << "  took " << damage << " damage. Remaining health: " << Health << endl;
 }
 
 shared_ptr<Item> PoisonMonster::DropItem() {

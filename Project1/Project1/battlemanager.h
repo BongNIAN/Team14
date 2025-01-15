@@ -18,8 +18,15 @@ public:
 	BattleManager() : fled(false) {}
 	void Battle(Character* c);
 	void PrintSelection();
-	bool fled;//µµ¸Á°¬´ÂÁö ¿©ºÎ Ãß°¡
-	/**¹İÈ¯Çü Shop Shared_ptr ¸ŞÀÎ¿¡¼­ ³Ö¾îÁÖ¼¼¿ä */
+
+	int BossBattle(Character* c);
+	int MonsterBattle(Character* c);
+	int HandleBattle(Character* c, shared_ptr<Monster> monster);
+	bool HandlePlayerAttack(Character* c, shared_ptr<Monster> monster);
+	bool HandleMonsterAttack(Character* c, shared_ptr<Monster> monster);
+	bool fled;//ë„ë§ê°”ëŠ”ì§€ ì—¬ë¶€ ì¶”ê°€
+	
+
 	
 private:
 	

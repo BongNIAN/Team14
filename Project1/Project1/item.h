@@ -14,7 +14,7 @@ private:
 public:
 
 
-
+    Item();
     // 가상 소멸자
     virtual ~Item() = default;
 

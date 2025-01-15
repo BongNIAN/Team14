@@ -15,16 +15,39 @@ int main() {
     Character * c = Character::getInstance("hero");
     shared_ptr<Item> item = make_shared<HealthPotion>();
     shared_ptr<Item> item2 = make_shared<AttackBoost>();
-    BattleManager bm;
+    BattleManager TestBossMonster;
+    BattleManager TestMonster;
     c->displayStatus();
     c->addItem(item,3);
     c->addItem(item2,2);
     
     int cnt = 0;
-    while (cnt<10)
+   /* while (cnt<10)
     {
-        bm.Battle(c);
+        TestBossMonster.BossBattle(c);
         cnt++;
+    }*/
+
+    int BattleResult = 100;
+
+
+    for (int i = 0; i < 10; i++)
+    {
+        BattleResult = TestMonster.MonsterBattle(c);
+
+        if (BattleResult==1) 
+        {
+            cout << "Player Win" << endl;
+        }
+        else if (BattleResult==2)
+        {
+            cout << "Monster Win" << endl;
+        }
+        else if (BattleResult==3)
+        {
+            cout << "Run" << endl;
+        }
+       
     }
    
     return 0;

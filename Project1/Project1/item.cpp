@@ -5,6 +5,7 @@
 using namespace std;
 
 
+Item::Item():name("Item"), price(0) {}
 
 AttackBoost::AttackBoost() : name("AttackBoost"), price(15) {}
 
@@ -13,7 +14,6 @@ void AttackBoost::use(Character* character) {
     int level = character->getLevel();
 
     int bonus = level * 8;
-
 
 
     // 캐릭터에 효과 적용
@@ -35,8 +35,10 @@ int AttackBoost::getPrice() const
 
 HealthPotion::HealthPotion() : name("HealthPotion"),price(10) {}
 
-void HealthPotion::use(Character* character) {
-    if (character) {
+void HealthPotion::use(Character* character) 
+{
+    if (character) 
+    {
         // 캐릭터의 체력을 회복시키는 로직
         int getLv = character->getLevel();
 
@@ -64,7 +66,8 @@ void ItemForQuest::use(Character* character) {
     }
 }
 
-string ItemForQuest::getName() const {
+string ItemForQuest::getName() const 
+{
     return this->name;
 }
 
@@ -73,7 +76,8 @@ int ItemForQuest::getPrice() const
     return this->price;
 }
 
-bool ItemCompare::operator()(const std::shared_ptr<Item>& left, const std::shared_ptr<Item>& right) const {
+bool ItemCompare::operator()(const std::shared_ptr<Item>& left, const std::shared_ptr<Item>& right) const 
+{
     // 아이템 이름을 기준으로 비교
     if (left->getName() == right->getName()) {
         return false;
