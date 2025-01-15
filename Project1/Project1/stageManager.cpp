@@ -70,19 +70,15 @@ void StageManager::nextStage() {
     if (stageUpWhenFlee) {
         currentStage++; // 현재 스테이지를 증가
     }
-    else {
-        std::cout << "도망쳤으므로 스테이지는 상승하지 않습니다." << std::endl;
-    }
+    else {}
 
-    std::cout << "다음 스테이지로 이동합니다!" << std::endl;
     stageUpWhenFlee = true; // 상태 초기화
 }
 
 void StageManager::checkStageUp(Character* c) {
     // 전투 횟수에 따라 스테이지 업 여부 확인
-    int battlesRequiredForNextStage = currentStage * 5; // 예시: 각 스테이지당 5번의 전투가 필요
+    int battlesRequiredForNextStage = currentStage * 1; // 예시: 각 스테이지당 1번의 전투가 필요
     if (c->getBattleCount() >= battlesRequiredForNextStage) {
-        std::cout << "전투 횟수로 인해 스테이지가 상승합니다!" << std::endl;
-        nextStage(); // 전투 횟수에 따라 스테이지 업
+         nextStage(); // 전투 횟수에 따라 스테이지 업
     }
 }

@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="battlemanager.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="monster.h" />
