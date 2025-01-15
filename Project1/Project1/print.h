@@ -1,12 +1,9 @@
 #ifndef PRINT_H
 #define PRINT_H
 
-#include <iostream>
 #include <string>
 #include <memory>
-#include <thread>
-#include <chrono>
-#include <windows.h>
+
 
 class Monster; // Forward declaration for Monster class
 
@@ -19,6 +16,14 @@ void PrintDeathMonster();
 void printMonsterTestModule(std::shared_ptr<Monster> m);
 void drawHpBar(int currentHp, int maxHp, int barLength = 20);
 void cursorLocation(int x, int y);
+void clearScreen();
 
+// Prints a single frame of the door animation.
+// Parameters:
+//   - frame: The current frame number to render.
+void printPlayerPerspectiveDoor(int frame);
+
+// Runs the door opening animation.
+void playerPerspectiveDoorAnimation();
 #endif // PRINT_H
 

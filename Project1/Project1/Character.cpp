@@ -233,6 +233,13 @@ void Character::visitShop() {
             if (!shop.buyItem(*this, buyChoice, quantity)) {// 선택한 아이템 구매
                 std::cout << "구매에 실패했습니다.\n";
             }
+            std::cout << "===============================" << std::endl;
+            std::cout << "ⓖ 골드: " << gold << std::endl;
+            std::cout << " " << std::endl;
+            std::cout << "♥ 물약: " << getItemQuantity(std::make_shared<HealthPotion>()) << std::endl;
+            std::cout << " " << std::endl;
+            std::cout << "↑ 공증: " << getItemQuantity(std::make_shared<AttackBoost>()) << std::endl;
+            std::cout << "===============================" << std::endl;
             break;
         }//
               // 아이템 판매 처리

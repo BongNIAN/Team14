@@ -3,6 +3,14 @@
 #include <iostream> 
 #include <thread> 
 #include <chrono> 
+#define NOMINMAX
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+
 
 // Include the Monster class definition
 
@@ -141,4 +149,70 @@ void cursorLocation(int x,int y)
 {
     COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+void clearScreen() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
+
+//void printDoorFrame(int frame) {
+//    clearScreen();
+//    std::cout << "+---------+" << std::endl;
+//    for (int i = 0; i < 5; ++i) {
+//        if (frame > i) {
+//            std::cout << "|        |" << std::endl;
+//        }
+//        else {
+//            std::cout << "| ";
+//            for (int j = 0; j < frame; ++j) {
+//                std::cout << " ";
+//            }
+//            std::cout << "/       |" << std::endl;
+//        }
+//    }
+//    std::cout << "+---------+" << std::endl;
+//}
+//void doorAnimation() {
+//    const int totalFrames = 10;
+//    for (int frame = 0; frame <= totalFrames; ++frame) {
+//        printDoorFrame(frame);
+//        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+//    }
+//}
+
+
+
+void printPlayerPerspectiveDoor(int frame) {
+    clearScreen();
+    if (frame < 5) {
+        std::cout << "You are approaching the door..." << std::endl;
+    }
+    else if (frame < 10) {
+        std::cout << "Your foot strikes the door!" << std::endl;
+    }
+    else {
+        std::cout << "The door bursts open, and you move forward!" << std::endl;
+    }
+    for (int i = 0; i < 5; ++i) {
+        std::cout << "+---------+" << std::endl;
+        if (frame >= 10) {
+            std::cout << "            " << std::endl;
+        }
+        else {
+            std::cout << "|         |" << std::endl;
+        }
+    }
+    std::cout << "+---------+" << std::endl;
+}
+
+void playerPerspectiveDoorAnimation() {
+    const int totalFrames = 15;
+    for (int frame = 0; frame <= totalFrames; ++frame) {
+        printPlayerPerspectiveDoor(frame);
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    }
 }
