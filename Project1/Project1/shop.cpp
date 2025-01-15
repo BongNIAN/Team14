@@ -59,6 +59,7 @@ bool Shop::sellItem(Character& character, size_t inventoryIndex) {
 
     // 판매 처리
     character.increaseGold(sellPrice);
+
     character.deleteItem(item);
 
     std::cout << item->getName() << "을(를) 판매하셨습니다. 판매 금액: " << sellPrice << " Gold\n";
