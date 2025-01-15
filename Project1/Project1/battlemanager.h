@@ -15,10 +15,10 @@ class Monster;
 class BattleManager {
 public:
 	
-	BattleManager() {}
+	BattleManager() : fled(false) {}
 	void Battle(Character* c);
 	void PrintSelection();
-	
+	bool fled;//도망갔는지 여부 추가
 	/**반환형 Shop Shared_ptr 메인에서 넣어주세요 */
 	
 private:
