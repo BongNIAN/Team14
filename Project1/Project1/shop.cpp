@@ -5,34 +5,34 @@
 
 
 Shop::Shop() {
-    // ìƒì ì—ì„œ íŒë§¤í•˜ëŠ” ì•„ì´í…œ ëª©ë¡ ì´ˆê¸°í™”
+    // »óÁ¡¿¡¼­ ÆÇ¸ÅÇÏ´Â ¾ÆÀÌÅÛ ¸ñ·Ï ÃÊ±âÈ­
     shopItems.push_back(std::make_shared<HealthPotion>());
     shopItems.push_back(std::make_shared<AttackBoost>());
    
 }
 
 Shop::~Shop() {
-    // ìŠ¤ë§ˆíŠ¸ í¬ì¸í„° ì‚¬ìš©
+    // ½º¸¶Æ® Æ÷ÀÎÅÍ »ç¿ë
 }
 
 void Shop::displayItems() const {
-    std::cout << "\nìƒì  ì•„ì´í…œ ëª©ë¡:\n";
+    std::cout << "\n»óÁ¡ ¾ÆÀÌÅÛ ¸ñ·Ï:\n";
     for (size_t i = 0; i < shopItems.size(); ++i) {
         auto& item = shopItems[i];
         std::cout << i + 1 << ". " << item->getName()
-            << " (ê°€ê²©: " << item->getPrice() << " Gold)\n";
+            << " (°¡°İ: " << item->getPrice() << " Gold)\n";
     }
 
 }
 
 bool Shop::buyItem(Character& character, size_t itemIndex, int quantity) {
     if (itemIndex < 1 || itemIndex > shopItems.size()) {
-        std::cout << "ì˜ëª»ëœ ì•„ì´í…œ ë²ˆí˜¸ì…ë‹ˆë‹¤.\n";
+        std::cout << "Àß¸øµÈ ¾ÆÀÌÅÛ ¹øÈ£ÀÔ´Ï´Ù.\n";
         return false;
     }
 
     if (quantity <= 0) {
-        std::cout << "ìˆ˜ëŸ‰ì€ 1 ì´ìƒì´ì–´ì•¼ í•©ë‹ˆë‹¤.\n";
+        std::cout << "¼ö·®Àº 1 ÀÌ»óÀÌ¾î¾ß ÇÕ´Ï´Ù.\n";
         return false;
     }
 
@@ -40,15 +40,15 @@ bool Shop::buyItem(Character& character, size_t itemIndex, int quantity) {
     int totalPrice = item->getPrice() * quantity;
 
     if (character.getGold() < totalPrice) {
-        std::cout << "ê³¨ë“œê°€ ë¶€ì¡±í•©ë‹ˆë‹¤! (í•„ìš” ê³¨ë“œ: " << totalPrice << ")\n";
+        std::cout << "°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù! (ÇÊ¿ä °ñµå: " << totalPrice << ")\n";
         return false;
     }
 
-    // êµ¬ë§¤ ì²˜ë¦¬
-    character.decreaseGold(totalPrice);  // ì´ ê°€ê²©ë§Œí¼ ê³¨ë“œ ì°¨ê°
-    character.addItem(item, quantity);  // ì„ íƒí•œ ì•„ì´í…œê³¼ ìˆ˜ëŸ‰ ì¶”ê°€
+    // ±¸¸Å Ã³¸®
+    character.decreaseGold(totalPrice);  // ÃÑ °¡°İ¸¸Å­ °ñµå Â÷°¨
+    character.addItem(item, quantity);  // ¼±ÅÃÇÑ ¾ÆÀÌÅÛ°ú ¼ö·® Ãß°¡
 
-    std::cout << item->getName() << "ì„(ë¥¼) " << quantity << "ê°œ êµ¬ë§¤í•˜ì…¨ìŠµë‹ˆë‹¤.\n";
+    std::cout << item->getName() << "À»(¸¦) " << quantity << "°³ ±¸¸ÅÇÏ¼Ì½À´Ï´Ù.\n";
     return true;
 }
 
@@ -56,12 +56,12 @@ bool Shop::sellItem(Character& character, size_t inventoryIndex, int quantity) {
     auto inventory = character.getInventory();
 
     if (inventoryIndex < 1 || inventoryIndex > inventory.size()) {
-        std::cout << "ì˜ëª»ëœ ì•„ì´í…œ ë²ˆí˜¸ì…ë‹ˆë‹¤.\n";
+        std::cout << "Àß¸øµÈ ¾ÆÀÌÅÛ ¹øÈ£ÀÔ´Ï´Ù.\n";
         return false;
     }
 
     if (quantity <= 0) {
-        std::cout << "ìˆ˜ëŸ‰ì€ 1 ì´ìƒì´ì–´ì•¼ í•©ë‹ˆë‹¤.\n";
+        std::cout << "¼ö·®Àº 1 ÀÌ»óÀÌ¾î¾ß ÇÕ´Ï´Ù.\n";
         return false;
     }
 
@@ -69,19 +69,19 @@ bool Shop::sellItem(Character& character, size_t inventoryIndex, int quantity) {
     int currentQuantity = character.getItemQuantity(item);
 
     if (quantity > currentQuantity) {
-        std::cout << "ì¸ë²¤í† ë¦¬ì— ì¶©ë¶„í•œ ìˆ˜ëŸ‰ì´ ì—†ìŠµë‹ˆë‹¤.\n";
+        std::cout << "ÀÎº¥Åä¸®¿¡ ÃæºĞÇÑ ¼ö·®ÀÌ ¾ø½À´Ï´Ù.\n";
         return false;
     }
 
-    int sellPrice = static_cast<int>(item->getPrice() * 0.6*quantity); // íŒë§¤ ê°€ê²©ì€ ì›ê°€ì˜ 60%
+    int sellPrice = static_cast<int>(item->getPrice() * 0.6*quantity); // ÆÇ¸Å °¡°İÀº ¿ø°¡ÀÇ 60%
 
-    // íŒë§¤ ì²˜ë¦¬
+    // ÆÇ¸Å Ã³¸®
     character.increaseGold(sellPrice);
 
     character.deleteItem(item, quantity);
 
 
-    std::cout << item->getName() << "ì„(ë¥¼) " << quantity << "ê°œ íŒë§¤í•˜ì…¨ìŠµë‹ˆë‹¤. íŒë§¤ ê¸ˆì•¡: "<< sellPrice << " Gold\n";
+    std::cout << item->getName() << "À»(¸¦) " << quantity << "°³ ÆÇ¸ÅÇÏ¼Ì½À´Ï´Ù. ÆÇ¸Å ±İ¾×: "<< sellPrice << " Gold\n";
     return true;
 }
 
