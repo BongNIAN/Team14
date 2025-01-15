@@ -186,8 +186,12 @@ void Character::displayInventory() const {
     itemManager->displayInventory();
 }
 
-void Character::deleteItem(std::shared_ptr<Item> itemToDelete) {
-    itemManager->deleteItem(itemToDelete);
+void Character::deleteItem(std::shared_ptr<Item> itemToDelete, int quantity) {
+    itemManager->deleteItem(itemToDelete, quantity);
+}
+
+int Character::getItemQuantity(std::shared_ptr<Item> item) const {
+    return itemManager->getItemQuantity(item);
 }
 
 // 상점 방문
@@ -212,18 +216,27 @@ void Character::visitShop() {
             std::cout << "구매할 아이템 번호를 입력하세요: ";
             int buyChoice;
             std::cin >> buyChoice;
-            shop.buyItem(*this, buyChoice);  // 선택한 아이템 구매
+            std::cout << "구매할 아이템의 수량을 입력하세요: ";
+            int quantity;
+            std::cin >> quantity;
+            if (!shop.buyItem(*this, buyChoice, quantity)) {// 선택한 아이템 구매
+                std::cout << "구매에 실패했습니다.\n";
+            }
             break;
-        }
+        }//
               // 아이템 판매 처리
         case 2: {
             std::cout << "당신의 인벤토리:\n";
             displayInventory();  // 인벤토리 아이템 표시
-
             std::cout << "판매할 아이템 번호를 입력하세요: ";
             int sellChoice;
             std::cin >> sellChoice;
-            shop.sellItem(*this, sellChoice);  // 선택한 아이템 판매
+            std::cout << "판매할 아이템의 수량을 입력하세요: ";
+            int quantity;
+            std::cin >> quantity;
+            if (!shop.sellItem(*this, sellChoice, quantity)) {// 선택한 아이템 판매
+                std::cout << "판매에 실패했습니다.\n";
+            }
             break;
         }
               // 상점 나가기
@@ -231,7 +244,6 @@ void Character::visitShop() {
             inShop = false;
             std::cout << "상점을 떠나셨습니다. 감사합니다!\n";
             break;
-
         default:
             std::cout << "잘못된 선택입니다. 다시 시도해주세요.\n";
             break;
