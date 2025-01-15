@@ -87,3 +87,18 @@ bool ItemCompare::operator()(const std::shared_ptr<Item>& left, const std::share
     return left->getName() > right->getName();
 }
 
+Antidote:: Antidote() : name("Antidote"), price(100) {}
+
+void Antidote::use(Character* character) {
+    std::cout << "해독제를 사용하셨습니다 ! 이제 중독 상태가 치유됩니다" << std::endl;
+}
+
+string Antidote::getName() const
+{
+    return this->name;
+}
+
+int Antidote::getPrice() const
+{
+    return this->price;
+}

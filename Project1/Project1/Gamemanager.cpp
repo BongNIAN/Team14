@@ -107,11 +107,11 @@ void mainMenu() {
     }
 }
 
-int main() {
-    // 게임의 메인 메뉴를 표시
-    mainMenu();
-
-
-    return 0;
-}
-
+//int main() {
+//    // 게임의 메인 메뉴를 표시
+//    mainMenu();
+//
+//
+//    return 0;
+//}
+//

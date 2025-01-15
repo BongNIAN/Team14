@@ -23,6 +23,7 @@ public:
     void displayInventory() const;
     void deleteItem(std::shared_ptr<Item> itemToDelete, int quantity);
     int getItemQuantity(std::shared_ptr<Item> item) const;
+    int getItemSize();
     std::vector<std::shared_ptr<Item>> getInventory();
 };
 
