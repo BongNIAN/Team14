@@ -38,9 +38,9 @@ public:
     void use(Character* character) override;
 
     // 아이템 등급 문자열 반환
-    std::string getName() const;
+    std::string getName() const override;
 
-    int getPrice() const;
+    int getPrice() const override;
 
 private:
     std::string name;
@@ -55,9 +55,9 @@ public:
     void use(Character* character) override;
 
     // 아이템 등급 문자열 반환
-    std::string getName() const;
+    std::string getName() const override;
 
-    int getPrice() const;
+    int getPrice() const override;
 
 private:
     std::string name;
@@ -74,16 +74,41 @@ public:
     void use(Character* character) override;
 
     // 아이템 등급 문자열 반환
-    std::string getName() const;
+    std::string getName() const override;
 
     //수정해야함
-    int getPrice() const;
+    int getPrice() const override;
 
 private:
     std::string name;
     int price;
 
 };
+
+class Antidote :public Item
+{
+
+public:
+    Antidote();
+
+    // 아이템 사용 메서드           
+    void use(Character* character) override;
+
+    // 아이템 등급 문자열 반환
+    std::string getName() const override;
+
+    //수정해야함
+    int getPrice() const override;
+
+private:
+    std::string name;
+    int price;
+
+};
+
+
+
+
 
 struct ItemCompare {
     bool operator()(const std::shared_ptr<Item>& left, const std::shared_ptr<Item>& right) const;

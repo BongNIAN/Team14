@@ -19,17 +19,8 @@ int main() {
     shared_ptr<Item> item2 = make_shared<AttackBoost>();
     BattleManager TestBossMonster;
     BattleManager TestMonster;
-   
-    c->addItem(item, 3);
-    c->addItem(item2, 4);
-    c->displayInventory();
-    c->useItem(1);
-    c->useItem(2);
-    c->displayInventory();
-    c->useItem(1); c->useItem(2); c->useItem(1);
-    c->displayInventory();
-     c->useItem(2);
-
+    Shop s;
+    c->visitShop();
 
   /*
     int cnt = 0;

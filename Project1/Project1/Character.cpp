@@ -250,6 +250,11 @@ void Character::visitShop() {
         case 2: {
             std::cout << "당신의 인벤토리:\n";
             displayInventory();  // 인벤토리 아이템 표시
+            if (!itemManager->getItemSize())
+            {
+                std::cout << "인벤토리가 비어있습니다 " << std::endl;
+                break;
+            }
             std::cout << "판매할 아이템 번호를 입력하세요: ";
             int sellChoice;
             std::cin >> sellChoice;
