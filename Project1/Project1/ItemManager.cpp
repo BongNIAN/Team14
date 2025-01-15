@@ -23,16 +23,43 @@ void ItemManager::addItem(std::shared_ptr<Item> newItem, int quantity) {
 // 아이템 사용
 //이부분을 string기반으로 받을까 말까
 void ItemManager::useItem(int index, Character* character) {
-    if (index >= 0 && index < inventory.size()) {
-        std::shared_ptr<Item> item = inventory[index-1]; // 인덱스 수정 완료
-        item->use(character); // 아이템 사용 로직
-        itemQuantities[item]--;
-        if (itemQuantities[item] <= 0) {
+    //if (index >= 0 && index < inventory.size()) {
+
+    //    std::shared_ptr<Item> item = inventory[index-1]; // 인덱스 수정 완료
+    //    item->use(character); // 아이템 사용 로직
+    //    itemQuantities[item]--;
+    //   
+    //    if (itemQuantities[item] <= 0) {
+    //        deleteItem(item, 1);
+    //    }
+    //}
+    //else {
+    //    std::cout << "Invalid item index.\n";
+    //}
+    if (index < 1 || index > static_cast<int>(itemQuantities.size())) {
+        std::cout << "Invalid item index.\n";
+        return;
+    }
+
+    
+    auto it = itemQuantities.begin();
+    std::advance(it, index - 1); // Map 인덱스 기반 탐색 
+
+    std::shared_ptr<Item> item = it->first; // 아이템 포인터 가져오기
+    int& quantity = it->second;             // 아이템 개수 참조
+
+    // 아이템 사용 로직
+    if (item && quantity > 0) {
+        item->use(character); // 캐릭터에게 아이템 효과 적용
+        quantity--;           // 사용 후 개수 감소
+
+        // 개수가 0이 되면 아이템 삭제
+        if (quantity <= 0) {
             deleteItem(item, 1);
         }
     }
     else {
-        std::cout << "Invalid item index.\n";
+        std::cout << "Item not exist or invalid quantity.\n";
     }
 }
 

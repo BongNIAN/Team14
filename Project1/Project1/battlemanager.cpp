@@ -89,21 +89,13 @@ void BattleManager :: Battle(Character *c)
 			cout << "인벤토리 닫기는 9을 써주세요 ! " << endl;
 			cin >> InvenSelection;
 
-			//만일 아이템이 비어있다면  invenselection 0 으로 
-			//인벤토리 사이즈 리턴 
-			//이거 검색값으로 리턴해야할듯?
-			//지금 벡터로 들어가서 벡터로 순회를 하기때문에
-			//인덱스 오류가 발생함 
-			//map으로 바꿔야할듯 
-			//그리고 shop에서 지금 인덱스가 맞는지 체크한번 해보기 
-			//몬스터가 죽을 때 확률적으로 독에 걸리게 한다
-			//독에 걸렸다면 ? 몬스터에게 공격받을 때 
+		
 			if (InvenSelection == 9)
 			{
 				CheckThrough = 0;
 				break;
 			}
-			c->useItem(1);
+			c->useItem(InvenSelection);
 			CheckThrough = 1;
 			break;
 			
@@ -182,7 +174,7 @@ void BattleManager :: Battle(Character *c)
 
 }
 
-
+/**Refactoring Battle*/
 int BattleManager::MonsterBattle(Character* c) 
 {
 	MonsterFactory m;
@@ -280,7 +272,7 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 				CheckThrough = 0;
 				break;
 			}
-			c->useItem(1);
+			c->useItem(InvenSelection);
 			CheckThrough = 1;
 			break;
 		}
