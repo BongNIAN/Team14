@@ -12,19 +12,19 @@
 
 int main() {
     InitializeRandom();
-   /* Character* c = Character::getInstance("hero");
+    
+
+    Character* c = Character::getInstance("hero");
     shared_ptr<Item> item = make_shared<HealthPotion>();
     shared_ptr<Item> item2 = make_shared<AttackBoost>();
     BattleManager TestBossMonster;
     BattleManager TestMonster;
-    c->displayStatus();
-    c->addItem(item, 3);
-    c->addItem(item2, 2);
-
+  
+  
     int cnt = 0;
     while (cnt < 10)
     {
-        TestBossMonster.BossBattle(c);
+        TestMonster.MonsterBattle(c);
         cnt++;
 
 
@@ -48,11 +48,8 @@ int main() {
                 cout << "Run" << endl;
             }
 
-        } } */
-        std::cout << "Press Enter to open the door..." << std::endl;
-        std::cin.get();
-        playerPerspectiveDoorAnimation();
-
+        } } 
+        
 
         return 0;
    

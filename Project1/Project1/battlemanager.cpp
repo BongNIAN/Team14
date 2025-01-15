@@ -217,8 +217,18 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 
 	while (true) {
 		cout << " //////////////////////" << endl;
-		if (IsCreateEvent(30) && CheckThrough != 0) {
+
+		//기존 CHECK!=0
+		if (IsCreateEvent(30) && CheckThrough == 1 ) {
 			cout << monster->GetName() << " 선 공격!" << endl;
+			//몬스터가 중독공격 &&플레이어 일반 상태
+			//HandlePoison과 중복사용하는 이유는
+			//플레이어 턴에만 중독 데미지를 주기 위해서
+			if (IsPoisonAttack(monster) && !c->isPoison())
+			{
+				std::cout << "플레이어가 중독되었습니다!" << std::endl;
+				c->setPoison(true); // 플레이어 상태를 중독으로 변경
+			}
 			IsDefeat = HandleMonsterAttack(c, monster);
 			if (IsDefeat)
 			{
@@ -239,6 +249,10 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			cout << "플레이어 공격 : " << c->getATK() << endl;
 			
 			IsWin = HandlePlayerAttack(c, monster);
+			if (!IsWin && c->getHP() <= 0)
+			{
+				return 2;
+			}
 			if (IsWin) 
 			{
 				return 1;
@@ -319,6 +333,18 @@ void BattleManager::PrintSelection()
 }
 bool BattleManager::HandlePlayerAttack(Character* c, shared_ptr<Monster> monster)
 {
+	if (c->isPoison()) {
+		// 플레이어 중독상태
+		c->displayStatus();
+		std::cout << "중독으로 인해 추가 데미지 1이 들어옵니다." << std::endl;
+		c->takeDamage(1); // 중독으로 인해 1 데미지
+		c->displayStatus();
+		if (c->getHP() <= 0)
+		{
+			return false;
+		}
+
+	}
 	monster->TakeDamage(c->getATK());
 	if (monster->GetHealth() <= 0) {
 		cout << "몬스터 처치! 경험치와 골드를 획득했습니다." << endl;
@@ -344,6 +370,12 @@ bool BattleManager::HandlePlayerAttack(Character* c, shared_ptr<Monster> monster
 }
 bool BattleManager::HandleMonsterAttack(Character* c, shared_ptr<Monster> monster)
 {
+	if (IsPoisonAttack(monster) && !c->isPoison()) {
+		// 몬스터가 독공격 && 플레이어 일반상태
+		std::cout << "플레이어가 중독되었습니다!" << std::endl;
+		c->setPoison(true); // 플레이어 상태를 중독으로 변경
+	}
+
 	cout << monster->GetName() << " 의 공격 ! 데미지 : "<<monster->GetAttack() << "를 입습니다." << endl;
 	c->takeDamage(monster->GetAttack());
 	if (c->getHP() <= 0) {
@@ -353,9 +385,12 @@ bool BattleManager::HandleMonsterAttack(Character* c, shared_ptr<Monster> monste
 	else return false;
 }
 
-//TODO : 2)TODO : userState by Observer
-
-// 3) todo : item사용 MAP Item기반 searching
-
-// 4) todo :  스테이지로 돌아가는 기능 추가
-
+bool BattleManager::IsPoisonAttack(shared_ptr<Monster> monster) 
+{
+	
+	if (monster->IsPoison())
+	{
+		return true;
+	}
+	return false;
+}

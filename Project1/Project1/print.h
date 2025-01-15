@@ -3,7 +3,8 @@
 
 #include <string>
 #include <memory>
-
+#define NOMINMAX
+#include<windows.h>
 
 class Monster; // Forward declaration for Monster class
 
@@ -17,13 +18,8 @@ void printMonsterTestModule(std::shared_ptr<Monster> m);
 void drawHpBar(int currentHp, int maxHp, int barLength = 20);
 void cursorLocation(int x, int y);
 void clearScreen();
-
-// Prints a single frame of the door animation.
-// Parameters:
-//   - frame: The current frame number to render.
-void printPlayerPerspectiveDoor(int frame);
-
-// Runs the door opening animation.
-void playerPerspectiveDoorAnimation();
+void drawExpBar(int currentHp, int maxHp, int barLength = 20);
+COORD getCurrentCursorPosition();
+void getConsoleInfo();
 #endif // PRINT_H
 

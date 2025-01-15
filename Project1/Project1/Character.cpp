@@ -4,6 +4,7 @@
 #include "Shop.h"
 #include "Observer.h" 
 #include "stageManager.h"
+#include "print.h"
 #include <iostream> 
 #include <algorithm> 
 
@@ -20,6 +21,7 @@ Character::Character(std::string name) : name(name) {
     gold = 0;
     battleCount = 0;
     itemManager = std::make_shared<ItemManager>();
+    IsPoison = false;
 }
 
 // Singleton 인스턴스 반환
@@ -80,11 +82,12 @@ void Character::Notify() {
 void Character::displayStatus() const {
     std::cout << "Name: " << name << std::endl;
     std::cout << "Level: " << level << std::endl;
-    std::cout << "Health: " << health << "/" << maxHealth << std::endl;
+    drawHpBar(health, maxHealth);
     std::cout << "Attack: " << attack << std::endl;
-    std::cout << "Experience: " << experience << std::endl;
+    drawExpBar(experience, 100);
     std::cout << "Gold: " << gold << std::endl;
     std::cout << "stage " << battleCount << std::endl;
+    std::cout << "IsPoison " << IsPoison << std::endl;
 }
 
 // 레벨 업
@@ -99,6 +102,7 @@ void Character::levelUp() {
 
 // 체력 증가
 void Character::increaseHP(int amount) {
+  
     health = std::min(health + amount, maxHealth);
     PlayerHp hpp = { health,maxHealth };
     Character::Notify();
@@ -271,5 +275,10 @@ void Character::visitShop() {
 
 // 독 상태 확인
 bool Character::isPoison() const {
-    return false;
+    return IsPoison;
+}
+
+void Character::setPoison(bool state)
+{
+    IsPoison = state;
 }
