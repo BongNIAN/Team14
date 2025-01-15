@@ -1,6 +1,7 @@
 #include "Character.h" 
 #include "ItemManager.h" 
-#include "Item.h" 
+#include "Item.h"
+#include "Shop.h"
 #include "Observer.h" 
 #include <iostream> 
 #include <algorithm> 
@@ -190,8 +191,52 @@ void Character::deleteItem(std::shared_ptr<Item> itemToDelete) {
 }
 
 // 상점 방문
-void Character::visitShop() const {
-    std::cout << "Welcome to the shop!\n";
+void Character::visitShop() {
+    Shop shop;  // 상점 인스턴스 생성
+    bool inShop = true;
+    int choice;
+
+    while (inShop) {
+        // 메뉴 표시 (상점 아이템은 구매 선택 시에만 표시)
+        std::cout << "\n==== 상점에 오신 것을 환영합니다! ====\n";
+        std::cout << "1. 아이템 구매\n";
+        std::cout << "2. 아이템 판매\n";
+        std::cout << "3. 상점 나가기\n";
+        std::cout << "번호를 선택하세요: ";
+        std::cin >> choice;
+
+        switch (choice) {
+            // 아이템 구매 처리
+        case 1: {
+            shop.displayItems();  // 상점에서 구매 가능한 아이템 표시
+            std::cout << "구매할 아이템 번호를 입력하세요: ";
+            int buyChoice;
+            std::cin >> buyChoice;
+            shop.buyItem(*this, buyChoice);  // 선택한 아이템 구매
+            break;
+        }
+              // 아이템 판매 처리
+        case 2: {
+            std::cout << "당신의 인벤토리:\n";
+            displayInventory();  // 인벤토리 아이템 표시
+
+            std::cout << "판매할 아이템 번호를 입력하세요: ";
+            int sellChoice;
+            std::cin >> sellChoice;
+            shop.sellItem(*this, sellChoice);  // 선택한 아이템 판매
+            break;
+        }
+              // 상점 나가기
+        case 3:
+            inShop = false;
+            std::cout << "상점을 떠나셨습니다. 감사합니다!\n";
+            break;
+
+        default:
+            std::cout << "잘못된 선택입니다. 다시 시도해주세요.\n";
+            break;
+        }
+    }
 }
 
 // 독 상태 확인

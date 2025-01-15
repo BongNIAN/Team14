@@ -83,7 +83,7 @@ public:
    
 
     // 상점 방문
-    void visitShop() const;
+    void visitShop();
 
     // 독 상태 확인
     bool isPoison() const;
