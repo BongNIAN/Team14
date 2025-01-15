@@ -113,7 +113,15 @@ void Character::increaseATK(int amount) {
 }
 // 추가: 경험치 set
 void Character::setEXP(int exp) {
-    experience = exp;
+    if (experience + exp >= 100)
+    {
+        levelUp();
+        experience +=  (exp - 100);
+    }
+    else
+    {
+        experience += exp;
+    }
 }
 
 

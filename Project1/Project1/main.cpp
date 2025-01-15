@@ -6,29 +6,56 @@
 #include "shop.h"
 #include "print.h"
 #include "observer.h"
+#include "battlemanager.h"
+
+
 
 int main() {
     InitializeRandom();
-    Character* c = Character::getInstance("hero");
-    auto playerObserver = std::make_shared<PlayerObserver>();
-    auto gameOverHandler = std::make_shared<GameOverHandler>();
-    c->Attach(playerObserver);
-    c->Attach(gameOverHandler);
-    MonsterFactory mf;
-    shared_ptr<Monster> m = mf.CreateMonster(1);
+    Character * c = Character::getInstance("hero");
+    shared_ptr<Item> item = make_shared<HealthPotion>();
+    shared_ptr<Item> item2 = make_shared<AttackBoost>();
+    BattleManager bm;
+    c->displayStatus();
+    c->addItem(item,3);
+    c->addItem(item2,2);
     
-    printMonsterTestModule(m);
-    c->takeDamage(170);
-    drawHpBar(c->getHP(), c->getMaxHp());
-    PrintLine("123213123");
-    printBattleWithMonster();
-    printBossMonster();
-    cout << GenerateRandom(1, 10) << endl;
-    c->takeDamage(30);
-    c->takeDamage(100);
+    int cnt = 0;
+    while (cnt<10)
+    {
+        bm.Battle(c);
+        cnt++;
+    }
    
     return 0;
 }
+
+
+
+
+
+
+//Test Observer : 
+//
+//Character* c = Character::getInstance("hero");
+//auto playerObserver = std::make_shared<PlayerObserver>();
+//auto gameOverHandler = std::make_shared<GameOverHandler>();
+//c->Attach(playerObserver);
+//c->Attach(gameOverHandler);
+//MonsterFactory mf;
+//shared_ptr<Monster> m = mf.CreateMonster(1);
+//
+//printMonsterTestModule(m);
+//c->takeDamage(170);
+//drawHpBar(c->getHP(), c->getMaxHp());
+//PrintLine("123213123");
+//printBattleWithMonster();
+//printBossMonster();
+//cout << GenerateRandom(1, 10) << endl;
+//c->takeDamage(30);
+//c->takeDamage(100);
+
+
 
 
 //Test Shop
