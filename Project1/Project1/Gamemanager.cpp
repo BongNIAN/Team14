@@ -16,9 +16,6 @@ void quitGame() {
     exit(0); // 게임 종료
 }
 
-
-
-
 // 게임 시작 함수
 void startGame() {
     // 캐릭터 이름 입력 받기
@@ -104,9 +101,11 @@ void mainMenu() {
     }
 }
 
-int main() {
-    // 게임의 메인 메뉴를 표시
-    mainMenu();
 
-    return 0;
-}
+
+//int main() {
+//    // 게임의 메인 메뉴를 표시
+//    mainMenu();
+//
+//    return 0;
+//}

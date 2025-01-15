@@ -1,11 +1,11 @@
-
 #ifndef MONSTER_H
 #define MONSTER_H
 
-
 #include <string>
 #include <memory>
-#include "item.h"
+
+// 전방 선언
+class Item;
 
 using namespace std;
 

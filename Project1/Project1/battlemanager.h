@@ -24,7 +24,7 @@ public:
 	int HandleBattle(Character* c, shared_ptr<Monster> monster);
 	bool HandlePlayerAttack(Character* c, shared_ptr<Monster> monster);
 	bool HandleMonsterAttack(Character* c, shared_ptr<Monster> monster);
-	bool fled;//도망갔는지 여부 추가
+	bool fled;
 	
 
 	

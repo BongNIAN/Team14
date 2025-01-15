@@ -132,6 +132,7 @@
     <ClCompile Include="Gamemanager.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="observer.cpp" />
     <ClCompile Include="print.cpp" />

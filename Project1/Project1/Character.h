@@ -1,11 +1,14 @@
-// Character.h
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
 #include <string>
 #include <vector>
-#include <map>
 #include <memory>
+
+// 전방 선언
+class IPlayerObserver;
+class ItemManager;
+class Item;
 
 
 

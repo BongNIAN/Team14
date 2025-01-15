@@ -186,7 +186,6 @@ void BattleManager :: Battle(Character *c)
 int BattleManager::MonsterBattle(Character* c) 
 {
 	MonsterFactory m;
-	
 	int InvenSelection = 1000;
 	shared_ptr<Monster> monster = m.CreateMonster(c->getLevel());
 	cout << "일반 몬스터..그르르릉 드장! 내 이름은?!!! : " << monster->GetName() << endl;
@@ -200,10 +199,7 @@ int BattleManager::BossBattle(Character* c)
 	int InvenSelection = 1000;
 	//몬스터 생성
 	shared_ptr<Monster> boss = m.CreateBossMonster(c->getLevel());
-
 	cout << "보스 몬스터..그르르릉 드장! 내 이름은?!!! : " << boss->GetName() << endl;
-	
-	
 	int BattleResult = HandleBattle(c, boss);
 	return BattleResult;
 
