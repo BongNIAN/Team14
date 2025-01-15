@@ -2,7 +2,6 @@
 #include "print.h"
 #include "random.h" 
 #include "stageManager.h"
-#include "Character.h"
 
 /** 혹시 오류생기면 교체할 모델입니다 삭제 노노!*/
 void BattleManager :: Battle(Character *c) 
@@ -172,7 +171,6 @@ void BattleManager :: Battle(Character *c)
 				StageManager stageManager;
 				stageManager.checkStageUp(c); // 스테이지를 올릴지 확인
 			}
-			
 			break;
 		}
 		

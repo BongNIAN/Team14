@@ -80,12 +80,8 @@ public:
     // 스테이지 관리
     void increasebattleCount();
     int getBattleCount() const;
-    int getBattleCount() {
-        return battleCount;
-    }
-    void setBattleCount(int stage) {
-        battleCount = stage;
-    }
+
+
     // 아이템 관리
     void addItem(std::shared_ptr<Item> newItem, int quantity = 1);
     void useItem(int index);
