@@ -1,6 +1,7 @@
 #include "battlemanager.h"
 #include "print.h"
 #include "random.h" 
+#include "stageManager.h"
 
 //이부분 리턴값 필요할것 같다 플레이어가 죽었는지 
 //몬스터가 죽었는지를 확인할 지표가 필요해 
@@ -122,6 +123,7 @@ void BattleManager :: Battle(Character *c)
 				cout << "탈출 성공 축하드려요 ㅎㅎ" << endl;
 				//이건 전투를 탈출하는거니깐  전투 전으로 
 				InvenSelection = 0;
+				fled = true;
 				break;
 			}
 			
@@ -134,6 +136,7 @@ void BattleManager :: Battle(Character *c)
 				CheckThrough = 100;
 				cout << "im BM , you die" << endl;
 				InvenSelection = 0;
+				fled = false;
 				break;
 			}
 
@@ -166,7 +169,15 @@ void BattleManager :: Battle(Character *c)
 
 
 		//얘가 가장먼저 돌아야함
-		if (CheckThrough==100 )break;
+		if (CheckThrough == 100) {
+			if (!fled) {
+				c->increasebattleCount(); //전투 횟수 증가
+
+				StageManager stageManager;
+				stageManager.checkStageUp(c); // 스테이지를 올릴지 확인
+			}
+			break;
+		}
 		
 	
 		

@@ -3,6 +3,7 @@
 #include "Item.h"
 #include "Shop.h"
 #include "Observer.h" 
+#include "stageManager.h"
 #include <iostream> 
 #include <algorithm> 
 
@@ -17,6 +18,7 @@ Character::Character(std::string name) : name(name) {
     attack = 30;
     experience = 0;
     gold = 0;
+    battleCount = 0;
     itemManager = std::make_shared<ItemManager>();
 }
 
@@ -82,6 +84,7 @@ void Character::displayStatus() const {
     std::cout << "Attack: " << attack << std::endl;
     std::cout << "Experience: " << experience << std::endl;
     std::cout << "Gold: " << gold << std::endl;
+    std::cout << "stage " << battleCount << std::endl;
 }
 
 // 레벨 업
@@ -156,6 +159,14 @@ std::vector<std::shared_ptr<Item>> Character::getInventory() const{
     return itemManager->getInventory();
 }
 
+//추가 : 배틀카운트(스테이지 관리시 필요)
+int Character::getBattleCount() const {
+    return battleCount;
+}
+
+void Character::increasebattleCount() {
+    battleCount++;
+}
 
 
 // 골드 조작 메서드들
