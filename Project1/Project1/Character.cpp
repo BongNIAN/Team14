@@ -168,6 +168,7 @@ void Character::increasebattleCount() {
     battleCount++;
 }
 
+
 // 골드 조작 메서드들
 void Character::decreaseGold(int amount) {
     if (gold >= amount) {
