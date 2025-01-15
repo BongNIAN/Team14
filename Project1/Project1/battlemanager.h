@@ -18,8 +18,11 @@ public:
 	BattleManager() {}
 	void Battle(Character* c);
 	void PrintSelection();
-	
-	/**반환형 Shop Shared_ptr 메인에서 넣어주세요 */
+	int BossBattle(Character* c);
+	int MonsterBattle(Character* c);
+	int HandleBattle(Character* c, shared_ptr<Monster> monster);
+	bool HandlePlayerAttack(Character* c, shared_ptr<Monster> monster);
+	bool HandleMonsterAttack(Character* c, shared_ptr<Monster> monster);
 	
 private:
 	
