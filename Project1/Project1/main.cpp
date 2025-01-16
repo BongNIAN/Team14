@@ -1,240 +1,254 @@
 #include <iostream>
-#include "monster.h"
-#include "random.h"
+#include <string>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
 #include "Character.h"
+#include "ItemManager.h"
 #include "item.h"
-#include "shop.h"
-#include "print.h"
 #include "battlemanager.h"
+#include "EventManager.h"
+#include "stageManager.h"
 
+// ∞‘¿” ¡æ∑· «‘ºˆ
+void quitGame() {
+    cout << "æ¡®∞£ ¥ŸΩ√ µπæ∆ø√≤®∂Û πœæÓ!" << endl;
+    exit(0); // ∞‘¿” ¡æ∑·
+}
 
+void visitshop() {
 
+}
 
-
-int main() {
-    InitializeRandom();
+// ∞‘¿” Ω√¿€ «‘ºˆ
+void startGame() {
+    // ƒ≥∏Ø≈Õ ¿Ã∏ß ¿‘∑¬ πﬁ±‚
+    string characterName;
+    cout << "≈©¿π...∏”∏Æ∞°...≥™¿« ¿Ã∏ß¿Ã ππø¥¡ˆ? : ";
+    cin.ignore(); // cinø°º≠ ≥≤æ∆¿÷¥¬ ∞≥«‡ πÆ¿⁄ √≥∏Æ
+    getline(cin, characterName); // ¿Ã∏ß¿ª «— ¡Ÿ∑Œ ¿‘∑¬πﬁ±‚
     
-    Character* c = Character::getInstance("hero");
-    shared_ptr<Item> item = make_shared<HealthPotion>();
-    shared_ptr<Item> item2 = make_shared<AttackBoost>();
-    BattleManager TestBossMonster;
-    BattleManager TestMonster;
-    int cnt = 0;
-    while (cnt < 10)
-    {
-        TestMonster.MonsterBattle(c);
-        cnt++;
-        int BattleResult = 100;
-        c->setDefense(10);
+    // Singleton¿ª ªÁøÎ«œø© Character ∞¥√º ª˝º∫
+    Character* character = Character::getInstance(characterName);
+    cout << "===============================================================================" << endl;
+    cout << " ±◊∑° ≥™¿« ¿Ã∏ß¿∫ " << characterName << "..." << endl;
+    cout << "æÓ¥¿∂ßøÕ ∞∞¿∫ ¿˙≥·¿Ãæ˙¥Ÿ, ±◊ ¿œ¿Ã ¿÷±‚ ¿¸±Ó¡ˆ. "<< endl;
+    cout << "¥´¿ª ∂π¿ª∂ß¥¬ ¿ÃπÃ æ∆π´∞Õµµ ∫∏¿Ã¡ˆ æ ¥¬ ƒ•»Êº”ø° µ¢±◊∑Ø¥œ ≥ıø©¿÷¥¬ ∞Ë¥‹ ¿ß¿« πÆ¿Ãæ˙¥Ÿ. "<< endl;
+    cout << "æ∆π´∏Æ ¡÷¿ß∏¶ µ—∑Ø∫∏æ∆µµ ≥™æ∆∞• ±Ê¿Ã ∫∏¿Ã¡ˆ æ ¥¬ ≥™∑ŒΩ·¥¬ ¿˙ πÆ¿ª «‚«ÿ ≥™æ∆∞°¥¬ ºˆπ€ø° æ¯¥Ÿ. "<< endl;         
+    cout << "¿Ã ±Êπ€ø° æ¯¥Ÿ.≥™æ∆∞°∫∏¿⁄." << endl;
+    cout << "π´æ˘¿Ã ¿÷¿ª¡ˆ ∏∏£¥¬ µŒ∑¡øÚ∞˙, ≈ª√‚±∏∞° ¿÷¿ª ºˆ ¿÷¥Ÿ¥¬ »Ò∏¡¿Ã ºØø© ≥™¿« πﬂ¿ª øÚ¡˜ø¥¥Ÿ." << endl;
+    cout << "===============================================================================" << endl;
+    int choice = 0;
+    
+    character->displayStatus();
 
-        for (int i = 0; i < 10; i++)
-        {
-            BattleResult = TestMonster.MonsterBattle(c);
+  
+    
+    while (true) {
+       
+        int choice;
+        cout << " ==================================" << endl;
+        cout << "§”         π´æ˘¿ª «“±Óø‰?         §”" << endl;
+        cout << " ==================================" << endl;
+        cout << "§”      1. ¥Ÿ¿Ω πÊ¿∏∑Œ ∞£¥Ÿ       §”" << endl;
+        cout << "§”      2. ƒ≥∏Ø≈Õ ªÛ≈¬ ∫∏±‚       §”" << endl;
+        cout << "§”         3. ∞‘¿” ¡æ∑·           §”" << endl;
+        cout << " ==================================" << endl;
 
-            if (BattleResult == 1)
+        cout << "∏ﬁ¥∫ø°º≠ º±≈√ : ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            cout << "¥Ÿ¿Ω πÊ¿∏∑Œ µÈæÓ∞©¥œ¥Ÿ..." << endl;
             {
-                cout << "Player Win" << endl;
+                BattleManager battleManager;
+                battleManager.MonsterBattle(character);  // ¿¸≈ı Ω√¿€
+                // 0Ω∫≈◊¿Ã¡ˆ ≈¨∏ÆæÓ »ƒ ªÛ¡° Ω∫≈‰∏Æ √‚∑¬
+                EventManager::triggerStageEvent(character->getBattleCount());
+
             }
-            else if (BattleResult == 2)
-            {
-                cout << "Monster Win" << endl;
-            }
-            else if (BattleResult == 3)
-            {
-                cout << "Run" << endl;
+            break;
+        case 2:
+            character->displayStatus();  // ƒ≥∏Ø≈Õ ªÛ≈¬ ∫∏±‚
+            break;
+        case 3:
+            quitGame();   // ∞‘¿” ¡æ∑·
+            break;
+        default:
+            cout << "¿ﬂ∏¯µ» º±≈√¿Ãæﬂ. ¥ŸΩ√ Ω√µµ«ÿ ∫¡." << endl;
+            startGame();  // ¥ŸΩ√ º±≈√¿ª «“ ºˆ ¿÷µµ∑œ
+            break;
+        }
+        
+        while (character->getBattleCount() > 0&& character->getBattleCount() <18 ) {
+
+            int choice;
+            cout << " ===================================" << endl;
+            cout << "§”         π´æ˘¿ª «“±Óø‰?          §”" << endl;
+            cout << " ===================================" << endl;
+            cout << "§”      1. ¥Ÿ¿Ω πÊ¿∏∑Œ ∞£¥Ÿ        §”" << endl;
+            cout << "§”          2. ªÛ¡°πÊπÆ            §”" << endl;
+            cout << "§”      3. ƒ≥∏Ø≈Õ ªÛ≈¬ ∫∏±‚        §”" << endl;
+            cout << "§”          4. ¿Œ∫•≈‰∏Æ            §”" << endl;
+            cout << "§”          5. ∞‘¿”¡æ∑·            §”" << endl;
+            cout << " ===================================" << endl;
+
+            cout << "∏ﬁ¥∫ø°º≠ º±≈√ : ";
+            cin >> choice;
+
+            switch (choice) {
+            case 1:
+                cout << "¥Ÿ¿Ω πÊ¿∏∑Œ µÈæÓ∞©¥œ¥Ÿ..." << endl;
+                {
+                    BattleManager battleManager;
+                    battleManager.MonsterBattle(character);  // ¿¸≈ı Ω√¿€
+                    // 10Ω∫≈◊¿Ã¡ˆ ≈¨∏ÆæÓ »ƒ ªÛ¡° Ω∫≈‰∏Æ √‚∑¬
+                    EventManager::triggerStageEvent(character->getBattleCount());
+
+                }
+                break;
+
+            case 2:
+                character->visitShop();
+                break;
+
+            case 3:
+                character->displayStatus();  // ƒ≥∏Ø≈Õ ªÛ≈¬ ∫∏±‚
+                break;
+
+            case 4:
+                character->displayInventory();
+                break;
+
+            case 5:
+                quitGame();   // ∞‘¿” ¡æ∑·
+                break;
+
+            default:
+                cout << "¿ﬂ∏¯µ» º±≈√¿Ãæﬂ. ¥ŸΩ√ Ω√µµ«ÿ ∫¡." << endl;
+                startGame();  // ¥ŸΩ√ º±≈√¿ª «“ ºˆ ¿÷µµ∑œ
+                break;
             }
 
-        } } 
 
-        return 0;
+        }
+        while (character->getBattleCount() ==18) {
+
+            int choice;
+            cout << " ===================================" << endl;
+            cout << "§”         π´æ˘¿ª «“±Óø‰?          §”" << endl;
+            cout << " ===================================" << endl;
+            cout << "§”      1. ¥Ÿ¿Ω πÊ¿∏∑Œ ∞£¥Ÿ        §”" << endl;
+            cout << "§”          2. ªÛ¡°πÊπÆ            §”" << endl;
+            cout << "§”      3. ƒ≥∏Ø≈Õ ªÛ≈¬ ∫∏±‚        §”" << endl;
+            cout << "§”          4. ¿Œ∫•≈‰∏Æ            §”" << endl;
+            cout << "§”          5. ∞‘¿”¡æ∑·            §”" << endl;
+            cout << " ===================================" << endl;
+
+            cout << "∏ﬁ¥∫ø°º≠ º±≈√ : ";
+            cin >> choice;
+
+            switch (choice) {
+            case 1:
+                cout << "¥Ÿ¿Ω πÊ¿∏∑Œ µÈæÓ∞©¥œ¥Ÿ..." << endl;
+                {
+                    BattleManager battleManager;
+                    battleManager.BossBattle(character);  // ¿¸≈ı Ω√¿€
+                    
+                    EventManager::triggerStageEvent(character->getBattleCount());
+                }
+                break;
+
+            case 2:
+                character->visitShop();
+                break;
+
+            case 3:
+                character->displayStatus();  // ƒ≥∏Ø≈Õ ªÛ≈¬ ∫∏±‚
+                break;
+
+            case 4:
+                character->displayInventory();
+                break;
+
+            case 5:
+                quitGame();   // ∞‘¿” ¡æ∑·
+                break;
+
+            default:
+                cout << "¿ﬂ∏¯µ» º±≈√¿Ãæﬂ. ¥ŸΩ√ Ω√µµ«ÿ ∫¡." << endl;
+                startGame();  // ¥ŸΩ√ º±≈√¿ª «“ ºˆ ¿÷µµ∑œ
+                break;
+            }
+
+
+        }
+    }
+
+}
+
+// ∏ﬁ¿Œ ∏ﬁ¥∫ »≠∏È «‘ºˆ
+void mainMenu() {
+    int choice;
+
+    cout << " ===================================" << endl;
+    cout << "§”          ≈ÿΩ∫∆Æ º“øÔ            §”" << endl;
+    cout << " ===================================" << endl;
+    cout << "§”         1. ∞‘¿” Ω√¿€            §”" << endl;
+    cout << "§”         2. ∞‘¿” ¡æ∑·            §”" << endl;
+    cout << "§”         3. ?????????            §”" << endl;
+    cout << " ===================================" << endl;
+
+    cout << "∏ﬁ¥∫ø°º≠ º±≈√«ÿ¡‡ : ";
+    cin >> choice;
+
+    switch (choice) {
+    case 1:
+        startGame();  // ∞‘¿” Ω√¿€
+        break;
+    case 2:
+        quitGame();   // ∞‘¿” ¡æ∑·
+        break;
+    
+    case 3:
+        cout << "§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—" << endl;
+        cout << "≥  ¡§∏ª »£±‚Ω…¿Ã ∏π±∏≥™? ±◊ »£±‚Ω…ø° ∫∏¥‰«œ¥¬ º±π∞¿ª ¡Ÿ≤≤!" << endl;
+        cout << "¿Ã ºº∞Ë∏¶ √¢¡∂«ﬂ¥Ÿ¥¬ ¿¸º≥∑Œ ¿¸«ÿ¡Æ ≥ª∑¡ø¿¥¬ Ω≈µÈ¿« ¿Ã∏ß¿ª æÀ∑¡¡Ÿ≤≤!" << endl;
+        cout << endl;
+        cout << " =======================================" << endl;
+        cout << "§”             ∏∏µÁ ªÁ∂˜µÈ             §”" << endl;
+        cout << " =======================================" << endl;
+        cout << "§”             ∆¿¿Â.∫¿ø¯∏Ì             §”" << endl;
+        cout << "§”            ∫Œ∆¿¿Â.±ËΩ¬»Ø            §”" << endl;
+        cout << "§”             ∆¿ø¯.∞˚ø¨¡¯             §”" << endl;
+        cout << "§”             ∆¿ø¯.±Ë¡ÿ±‚             §”" << endl;
+        cout << "§”             ∆¿ø¯.±Ëº∫»∆             §”" << endl;
+        cout << "§”                                     §”" << endl;
+        cout << "§”                Team                 §”" << endl;
+        cout << "§”         ∫¿∞Ò∑π∞˚Ω∫≈∏ 3∞¢±Ëπ‰        §”" << endl;
+        cout << "§”              (∫¿∞˚3±Ë)              §”" << endl;
+        cout << "§”                                     §”" << endl;
+        cout << "§”         Thank you for Playing!      §”" << endl;
+        cout << " =======================================" << endl;
+        cout << "§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—§—" << endl;
+        mainMenu();
+        
+        break;
+    default:
+        cout << "¿ﬂ∏¯µ» º±≈√¿Ãæﬂ. ¥ŸΩ√ Ω√µµ«ÿ ∫¡." << endl;
+        mainMenu();
+        break;
+    }
    
 
 }
 
+int main() {
+    // ∞‘¿”¿« ∏ﬁ¿Œ ∏ﬁ¥∫∏¶ «•Ω√
+    mainMenu();
 
-//Test UseItem
-
-//Character* c = Character::getInstance("hero");
-//shared_ptr<Item> item = make_shared<HealthPotion>();
-//shared_ptr<Item> item2 = make_shared<AttackBoost>();
-//BattleManager TestBossMonster;
-//BattleManager TestMonster;
-//
-//c->addItem(item, 3);
-//c->addItem(item2, 4);
-//c->displayInventory();
-//c->useItem(1);
-//c->useItem(2);
-//c->displayInventory();
-//c->useItem(1); c->useItem(1);
-//c->displayInventory();
-//c->useItem(2); c->useItem(2);
-
-
-
-//Test Observer : 
-//
-//Character* c = Character::getInstance("hero");
-//auto playerObserver = std::make_shared<PlayerObserver>();
-//auto gameOverHandler = std::make_shared<GameOverHandler>();
-//c->Attach(playerObserver);
-//c->Attach(gameOverHandler);
-//MonsterFactory mf;
-//shared_ptr<Monster> m = mf.CreateMonster(1);
-//
-//printMonsterTestModule(m);
-//c->takeDamage(170);
-//drawHpBar(c->getHP(), c->getMaxHp());
-//PrintLine("123213123");
-//printBattleWithMonster();
-//printBossMonster();
-//cout << GenerateRandom(1, 10) << endl;
-//c->takeDamage(30);
-//c->takeDamage(100);
-
-
-
-
-//Test Shop
-//Character* c = Character::getInstance("hero");
-///* BossMonsterFactory boss;
-// MonsterFactory monst;
-// int ItemCnt = 0;*/
-//
-//Shop s;
-//
-//bool check = true;
-//check = s.buyItem(*c, 1);
-//
-//cout << "dfasdfasdfasdfasdfasf" << check << endl;
-//
-//c->increaseGold(1000);
-//check = s.buyItem(*c, 1);
-//check = s.buyItem(*c, 1);
-//check = s.buyItem(*c, 1);
-//check = s.buyItem(*c, 1);
-//check = s.buyItem(*c, 1);
-//
-//check = s.buyItem(*c, 1);
-//check = s.buyItem(*c, 1);
-//check = s.buyItem(*c, 1);
-//check = s.buyItem(*c, 2);
-//check = s.buyItem(*c, 100);
-//s.buyItem(*c, 200);
-//c->displayInventory();
-//cout << "12312312312312321312" << endl;
-//vector<shared_ptr<Item>> inven = c->getInventory();
-//
-//cout << "inven size is  : " << inven.size() << endl;
-//
-//cout << "Inventory test" << endl;
-//
-//for (int i = 0; i < inven.size(); i++)
-//{
-//    inven[i]->use(c);
-//}
-
-
-
-
-//Test ItemPrice
-
-
-//shared_ptr<Item> healthPotion = make_shared<HealthPotion>();
-//shared_ptr<Item> itemForQuest = make_shared<ItemForQuest>();
-//shared_ptr<Item> attackBoost = make_shared<AttackBoost>();
-//
-//int a = healthPotion->getPrice();
-//cout << a << endl;
-//a = itemForQuest->getPrice();
-//cout << a << endl;
-//a = attackBoost->getPrice();
-//cout << a << endl;
-
-
-
-
-
-
-
-
-//Test C-I-M:
-    /* for (int i = 0; i < 100; i++) {
-        boss.CreateBossMonster(i);
-    }
-    for (int i = 0; i < 100; i++) {
-
-        shared_ptr<Monster> tmp = monst.CreateMonster(i);
-        shared_ptr<Item> itemTmp;
-        itemTmp = tmp->DropItem();
-        if (itemTmp == nullptr)continue;
-        c->addItem(itemTmp);
-        ItemCnt++;
-
-    }
-    c->displayInventory();
-    cout << ItemCnt << endl;
-    cout << "\n";*/
-    /*
-    * ÌòÑÏû¨ Ïò§Î¶ÑÏ∞®ÏàúÏúºÎ°ú Ï†ïÎ†¨ÎêòÏñ¥ ÏûàÍ∏∞ ÎïåÎ¨∏Ïóê [0] = AttackBoost
-    * [1] = HealthPotion
-    * [2] = QuestForItem
-    **/
-    /* c->displayStatus();
-     c->useItem(0);
-     c->displayStatus();
-     c->useItem(2);
-     c->displayStatus();
-     c->useItem(1);
-     c->displayStatus();
-     cout << "\n";
-     c->displayInventory();
-     cout << "\n";
-
-     cout << "display Status start" << endl;
-     c->displayStatus();
-     cout << "display Status end" << endl;
-     cout << "\n";
-     c->displayInventory();
-     cout << "start" << endl;*/
-
-     /**Ïù¥Î∂ÄÎ∂Ñ ÏóêÎü¨ ->Ïò¨Î∞îÎ•¥ÏßÄ ÏïäÏùÄ nullptrÏù¥ Îì§Ïñ¥Í∞ÑÎã§Î©¥, Ï§ëÎã®Îê® */
-     // c->addItem(HealthPotion, 3); 
-     // HealthPotionÏù¥ nullÏù¥ÎùºÎ©¥ Ï§ëÎã®Ï≤òÎ¶¨ 
-     // Î©îÏÑúÎìú ItemManager addÌï®ÏàòÏóê nullÍ∞í Ï≤òÎ¶¨ ÏôÑÎ£å 
-
-
-
-     /*c->addItem(healthPotion, 3);
-
-     c->displayInventory();
-
-     c->addItem(nullptr, 3);
-
-
-     c->displayStatus();
-     c->increaseGold(3);
-     c->displayStatus();
-
-
-     c->decreaseGold(3);
-     c->displayStatus();
-
-
-     c->decreaseGold(3);
-     c->displayStatus();
-
-     c->decreaseGold(3);
-     c->displayStatus();
-
-     c->takeDamage(30);
-     c->displayStatus();
-
-     c->takeDamage(30);
-     c->displayStatus();
-     c->takeDamage(30);
-     c->displayStatus();
-     c->takeDamage(300);
-     c->displayStatus();
-
-     c->~Character();*/
+    return 0;
+}

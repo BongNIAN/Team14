@@ -8,7 +8,7 @@ using namespace std;
 
 // Goblin Implementation
 Goblin::Goblin(int level) {
-    Name = "Goblin";
+    Name = "고블린";
     Health = level * GenerateRandom(20, 30);
     Attack = level * GenerateRandom(5, 10);
 }
@@ -47,15 +47,10 @@ shared_ptr<Item> Goblin::DropItem() {
     cout << "I am Goblin, No Drop." << endl;
     return nullptr;
 }
-bool Goblin::IsPoison() const
-{
-    return false;
-}
-
 
 // Troll Implementation
 Troll::Troll(int level) {
-    Name = "Troll";
+    Name = "트롤";
     Health = level * GenerateRandom(20, 30);
     Attack = level * GenerateRandom(5, 10);
 }
@@ -92,18 +87,13 @@ shared_ptr<Item> Troll::DropItem() {
             return make_shared<AttackBoost>();
         }
     }
-    cout << "I am Troll, No Drop." << endl;
+    
     return nullptr;
 }
-bool Troll::IsPoison() const
-{
-    return false;
-}
-
 
 // Orc Implementation
 Orc::Orc(int level) {
-    Name = "Orc";
+    Name = "오크";
     Health = level * GenerateRandom(20, 30);
     Attack = level * GenerateRandom(5, 10);
 }
@@ -139,20 +129,15 @@ shared_ptr<Item> Orc::DropItem() {
             return make_shared<AttackBoost>();
         }
     }
-    cout << "I am Orc, No Drop." << endl;
+    
     return nullptr;
 }
-bool Orc::IsPoison() const
-{
-    return false;
-}
-
 
 // MonsterDecorator Implementation
 MonsterDecorator::MonsterDecorator(shared_ptr<Monster> m) : monster(move(m)) {}
 
 MonsterDecorator::~MonsterDecorator() {
-    cout << " byebyeDecorator" << endl;
+   
 }
 
 string MonsterDecorator::GetName() const {
@@ -174,14 +159,10 @@ void MonsterDecorator::TakeDamage(int damage) {
 shared_ptr<Item> MonsterDecorator::DropItem() {
     return monster->DropItem();
 }
-bool MonsterDecorator::IsPoison() const
-{
-    return false;
-}
 
 // BossMonster Implementation
 BossMonster::BossMonster(shared_ptr<Monster> m) : MonsterDecorator(move(m)) {
-    Name = "Boss" + monster->GetName();
+    Name = "좀비 드래곤";
     Attack = static_cast<int>(monster->GetAttack() * 1.5);
     Health = static_cast<int>(monster->GetHealth() * 1.5);
 }
@@ -223,18 +204,13 @@ shared_ptr<Item> BossMonster::DropItem() {
             return make_shared<AttackBoost>();
         }
     }
-    cout << "I am Boss, No Drop." << endl;
+    
     return nullptr;
 }
-bool BossMonster::IsPoison() const
-{
-    return false;
-}
-
 
 // PoisonMonster Implementation
 PoisonMonster::PoisonMonster(shared_ptr<Monster> m) : MonsterDecorator(move(m)) {
-    Name = "Poison" + monster->GetName();
+    Name = "좀비 " + monster->GetName();
     Attack = monster->GetAttack();
     Health = monster->GetHealth();
 }
@@ -248,15 +224,10 @@ int PoisonMonster::GetHealth() const {
 }
 
 int PoisonMonster::GetAttack() const {
-   
-    return Attack;
-}
-bool PoisonMonster::IsPoison() const 
-{
-    if (IsCreateEvent(50)) {
-        return true;
+    if (IsCreateEvent(10)) {
+        return Attack + 1;
     }
-    return false;
+    return Attack;
 }
 
 void PoisonMonster::TakeDamage(int damage) {
@@ -284,17 +255,16 @@ shared_ptr<Item> PoisonMonster::DropItem() {
             return make_shared<AttackBoost>();
         }
     }
-    cout << "I am " << GetName() << ", No Drop." << endl;
+    
     return nullptr;
 }
 
 // MonsterFactory Implementation
 shared_ptr<Monster> MonsterFactory::CreateMonster(int level) const {
     shared_ptr<Monster> tmp = CreateMonsterFunc(level);
-    
-    if (IsCreateEvent(50)) {
+    if (GenerateRandom(1, 10) == 1) {
         tmp = make_shared<PoisonMonster>(tmp);
-        cout << "MonsterFactory Create New PoisonMonster" << endl;
+       
     }
     return tmp;
 }
@@ -303,7 +273,7 @@ shared_ptr<Monster> MonsterFactory::CreateMonster(int level) const {
 shared_ptr<Monster> BossMonsterFactory::CreateBossMonster(int level) const {
     shared_ptr<Monster> tmp = CreateMonsterFunc(level);
     tmp = make_shared<BossMonster>(tmp);
-    cout << "Boss Name: " << tmp->GetName() << endl;
+    
     return tmp;
 }
 
@@ -315,15 +285,12 @@ shared_ptr<Monster> CreateMonsterFunc(int level) {
     switch (MonsterType) {
     case 0:
         tmp = make_shared<Goblin>(level);
-        cout << "MonsterFactory Create New Goblin" << endl;
         break;
     case 1:
         tmp = make_shared<Orc>(level);
-        cout << "MonsterFactory Create New Orc" << endl;
         break;
     case 2:
         tmp = make_shared<Troll>(level);
-        cout << "MonsterFactory Create New Troll" << endl;
         break;
     default:
         cout << "Critical Error" << endl;

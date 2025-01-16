@@ -125,7 +125,7 @@ void drawHpBar(int currentHp, int maxHp, int barLength) {
 
     std::string hpBar;
 
-    int filledLengthRed = static_cast<int>(barLength * 0.4);
+    int filledLengthRed = static_cast<int>(barLength * 0.3);
 
     if (filledLength < filledLengthRed) {
         for (int i = 0; i < filledLength; ++i) {
@@ -144,25 +144,6 @@ void drawHpBar(int currentHp, int maxHp, int barLength) {
 
     std::cout << "HP: [" << hpBar << "] " << currentHp << "/" << maxHp << std::endl;
 }
-void drawExpBar(int currentHp, int maxHp, int barLength) {
-    int filledLength = (currentHp * barLength) / maxHp;
-    int emptyLength = barLength - filledLength;
-    
-    std::string yellow = "\033[43m \033[0m";
-    std::string white = "\033[47m \033[0m";
-    std::string ExpBar;
-    for (int i = 0; i < filledLength; ++i) {
-        ExpBar += yellow;
-    }
-
-    // 빈 부분 (흰색)
-    for (int i = 0; i < emptyLength; ++i) {
-        ExpBar += white;
-    }
-
-    std::cout << "EXP:[" << ExpBar << "] " << currentHp << "/" << maxHp << std::endl;
-}
-
 
 void cursorLocation(int x,int y) 
 {
@@ -178,25 +159,60 @@ void clearScreen() {
 #endif
 }
 
-COORD getCurrentCursorPosition() {
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
-        return csbi.dwCursorPosition;
+//void printDoorFrame(int frame) {
+//    clearScreen();
+//    std::cout << "+---------+" << std::endl;
+//    for (int i = 0; i < 5; ++i) {
+//        if (frame > i) {
+//            std::cout << "|        |" << std::endl;
+//        }
+//        else {
+//            std::cout << "| ";
+//            for (int j = 0; j < frame; ++j) {
+//                std::cout << " ";
+//            }
+//            std::cout << "/       |" << std::endl;
+//        }
+//    }
+//    std::cout << "+---------+" << std::endl;
+//}
+//void doorAnimation() {
+//    const int totalFrames = 10;
+//    for (int frame = 0; frame <= totalFrames; ++frame) {
+//        printDoorFrame(frame);
+//        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+//    }
+//}
+
+
+
+void printPlayerPerspectiveDoor(int frame) {
+    clearScreen();
+    if (frame < 5) {
+        std::cout << "You are approaching the door..." << std::endl;
+    }
+    else if (frame < 10) {
+        std::cout << "Your foot strikes the door!" << std::endl;
     }
     else {
-        // 기본 값 반환 (0, 0)
-        return { 0, 0 };
+        std::cout << "The door bursts open, and you move forward!" << std::endl;
     }
+    for (int i = 0; i < 5; ++i) {
+        std::cout << "+---------+" << std::endl;
+        if (frame >= 10) {
+            std::cout << "            " << std::endl;
+        }
+        else {
+            std::cout << "|         |" << std::endl;
+        }
+    }
+    std::cout << "+---------+" << std::endl;
 }
 
-void getConsoleInfo() {
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
-        std::cout << "현재 커서 위치: (" << csbi.dwCursorPosition.X << ", " << csbi.dwCursorPosition.Y << ")\n";
-        std::cout << "콘솔 창 크기: (" << csbi.srWindow.Right - csbi.srWindow.Left + 1 << ", "
-            << csbi.srWindow.Bottom - csbi.srWindow.Top + 1 << ")\n";
-    }
-    else {
-        std::cerr << "콘솔 정보를 가져올 수 없습니다.\n";
+void playerPerspectiveDoorAnimation() {
+    const int totalFrames = 15;
+    for (int frame = 0; frame <= totalFrames; ++frame) {
+        printPlayerPerspectiveDoor(frame);
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
     }
 }
