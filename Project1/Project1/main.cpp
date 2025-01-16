@@ -176,7 +176,7 @@ int main() {
     cout << ItemCnt << endl;
     cout << "\n";*/
     /*
-    * ÇöÀç ¿À¸§Â÷¼øÀ¸·Î Á¤·ÄµÇ¾î ÀÖ±â ¶§¹®¿¡ [0] = AttackBoost
+    * í˜„ì¬ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì •ë ¬ë˜ì–´ ìˆê¸° ë•Œë¬¸ì— [0] = AttackBoost
     * [1] = HealthPotion
     * [2] = QuestForItem
     **/
@@ -198,10 +198,10 @@ int main() {
      c->displayInventory();
      cout << "start" << endl;*/
 
-     /**ÀÌºÎºĞ ¿¡·¯ ->¿Ã¹Ù¸£Áö ¾ÊÀº nullptrÀÌ µé¾î°£´Ù¸é, Áß´ÜµÊ */
+     /**ì´ë¶€ë¶„ ì—ëŸ¬ ->ì˜¬ë°”ë¥´ì§€ ì•Šì€ nullptrì´ ë“¤ì–´ê°„ë‹¤ë©´, ì¤‘ë‹¨ë¨ */
      // c->addItem(HealthPotion, 3); 
-     // HealthPotionÀÌ nullÀÌ¶ó¸é Áß´ÜÃ³¸® 
-     // ¸Ş¼­µå ItemManager addÇÔ¼ö¿¡ null°ª Ã³¸® ¿Ï·á 
+     // HealthPotionì´ nullì´ë¼ë©´ ì¤‘ë‹¨ì²˜ë¦¬ 
+     // ë©”ì„œë“œ ItemManager addí•¨ìˆ˜ì— nullê°’ ì²˜ë¦¬ ì™„ë£Œ 
 
 
 
