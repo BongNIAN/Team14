@@ -9,31 +9,23 @@
 
 
 
+
+
 int main() {
     InitializeRandom();
     
-
     Character* c = Character::getInstance("hero");
     shared_ptr<Item> item = make_shared<HealthPotion>();
     shared_ptr<Item> item2 = make_shared<AttackBoost>();
     BattleManager TestBossMonster;
     BattleManager TestMonster;
-    Shop s;
-    c->increaseGold(3000);
-    c->visitShop();
-
-
-
-  
     int cnt = 0;
     while (cnt < 10)
     {
         TestMonster.MonsterBattle(c);
         cnt++;
-
-
         int BattleResult = 100;
-
+        c->setDefense(10);
 
         for (int i = 0; i < 10; i++)
         {
@@ -53,7 +45,6 @@ int main() {
             }
 
         } } 
-        
 
         return 0;
    
@@ -185,7 +176,7 @@ int main() {
     cout << ItemCnt << endl;
     cout << "\n";*/
     /*
-    * ÇöÀç ¿À¸§Â÷¼øÀ¸·Î Á¤·ÄµÇ¾î ÀÖ±â ¶§¹®¿¡ [0] = AttackBoost
+    * í˜„ì¬ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì •ë ¬ë˜ì–´ ìˆê¸° ë•Œë¬¸ì— [0] = AttackBoost
     * [1] = HealthPotion
     * [2] = QuestForItem
     **/
@@ -207,10 +198,10 @@ int main() {
      c->displayInventory();
      cout << "start" << endl;*/
 
-     /**ÀÌºÎºĞ ¿¡·¯ ->¿Ã¹Ù¸£Áö ¾ÊÀº nullptrÀÌ µé¾î°£´Ù¸é, Áß´ÜµÊ */
+     /**ì´ë¶€ë¶„ ì—ëŸ¬ ->ì˜¬ë°”ë¥´ì§€ ì•Šì€ nullptrì´ ë“¤ì–´ê°„ë‹¤ë©´, ì¤‘ë‹¨ë¨ */
      // c->addItem(HealthPotion, 3); 
-     // HealthPotionÀÌ nullÀÌ¶ó¸é Áß´ÜÃ³¸® 
-     // ¸Ş¼­µå ItemManager addÇÔ¼ö¿¡ null°ª Ã³¸® ¿Ï·á 
+     // HealthPotionì´ nullì´ë¼ë©´ ì¤‘ë‹¨ì²˜ë¦¬ 
+     // ë©”ì„œë“œ ItemManager addí•¨ìˆ˜ì— nullê°’ ì²˜ë¦¬ ì™„ë£Œ 
 
 
 

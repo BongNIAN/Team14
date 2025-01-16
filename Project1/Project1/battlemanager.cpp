@@ -196,6 +196,7 @@ int BattleManager::BossBattle(Character* c)
 }
 
 
+
 /**return 1 : victory, return 2 : defeat , return 3 : run */
 /**checkThrough : 1. 선어택  , 0 : 선어택 맞지 않음  */
 int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
@@ -381,8 +382,8 @@ bool BattleManager::HandleMonsterAttack(Character* c, shared_ptr<Monster> monste
 		c->setPoison(true); // 플레이어 상태를 중독으로 변경
 	}
 
-	cout << monster->GetName() << " 의 공격 ! 데미지 : "<<monster->GetAttack() << "를 입습니다." << endl;
-	c->takeDamage(monster->GetAttack());
+	cout << monster->GetName() << " 의 공격 ! 데미지 : "<<monster->GetAttack()-c->getDefense() << "를 입습니다." << endl;
+	c->takeDamage(monster->GetAttack()- c->getDefense());
 	if (c->getHP() <= 0) {
 		cout << "플레이어가 사망했습니다." << endl;
 		return true; // 플레이어 사망

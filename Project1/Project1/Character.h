@@ -27,6 +27,7 @@ private:
     int gold;                   // 골드 소지량
     int battleCount;            // 전투 횟수(스테이지 관리)
     bool IsPoison;
+    int defense = 0;
     std::shared_ptr<ItemManager> itemManager; // 아이템 관리자를 위한 포인터
    
 
@@ -72,6 +73,10 @@ public:
     // 스테이지 관리
     void increasebattleCount();
     int getBattleCount() const;
+
+    //방어력 관리
+    int getDefense() const;
+    void setDefense(int amount);
 
 
     // 아이템 관리
