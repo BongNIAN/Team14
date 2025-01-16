@@ -5,15 +5,10 @@
 #include <vector>
 #include <memory>
 
-// 전방 선언
-class IPlayerObserver;
-class ItemManager;
-class Item;
 
 
 
 // 전방 선언
-class IPlayerObserver;
 class ItemManager;
 class Item;
 
@@ -33,7 +28,7 @@ private:
     int battleCount;            // 전투 횟수(스테이지 관리)
     bool IsPoison;
     std::shared_ptr<ItemManager> itemManager; // 아이템 관리자를 위한 포인터
-    std::vector<std::shared_ptr<IPlayerObserver>> observers; // 옵저버 목록
+   
 
 
     // Private constructor for singleton
@@ -49,10 +44,7 @@ public:
     static void destroyInstance(); // Singleton 인스턴스 제거
     
     //옵저버 등록 
-    void Attach(const std::shared_ptr<IPlayerObserver>& observer);
-    void Detach(const std::shared_ptr<IPlayerObserver>& observer);
-    void Notify();
-
+ 
 
     // 캐릭터 상태 출력
     void displayStatus() const;

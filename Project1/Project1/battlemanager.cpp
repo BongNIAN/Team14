@@ -177,9 +177,8 @@ void BattleManager :: Battle(Character *c)
 /**Refactoring Battle*/
 int BattleManager::MonsterBattle(Character* c) 
 {
-	MonsterFactory m;
 	int InvenSelection = 1000;
-	shared_ptr<Monster> monster = m.CreateMonster(c->getLevel());
+	shared_ptr<Monster> monster = monsterFactory.CreateMonster(c->getLevel());
 	cout << "일반 몬스터..그르르릉 드장! 내 이름은?!!! : " << monster->GetName() << endl;
 	int BattleResult = HandleBattle(c, monster);
 	return BattleResult;
@@ -187,10 +186,9 @@ int BattleManager::MonsterBattle(Character* c)
 int BattleManager::BossBattle(Character* c)
 {
 
-	BossMonsterFactory m;
 	int InvenSelection = 1000;
 	//몬스터 생성
-	shared_ptr<Monster> boss = m.CreateBossMonster(c->getLevel());
+	shared_ptr<Monster> boss = bossMonsterFactory.CreateBossMonster(c->getLevel());
 	cout << "보스 몬스터..그르르릉 드장! 내 이름은?!!! : " << boss->GetName() << endl;
 	int BattleResult = HandleBattle(c, boss);
 	return BattleResult;
@@ -329,7 +327,7 @@ bool BattleManager::HandlePlayerAttack(Character* c, shared_ptr<Monster> monster
 		// 플레이어 중독상태
 		c->displayStatus();
 		std::cout << "중독으로 인해 추가 데미지 1이 들어옵니다." << std::endl;
-		c->takeDamage(1); // 중독으로 인해 1 데미지
+		c->takeDamage(120); // 중독으로 인해 1 데미지
 		c->displayStatus();
 		if (c->getHP() <= 0)
 		{
@@ -376,7 +374,6 @@ bool BattleManager::HandleMonsterAttack(Character* c, shared_ptr<Monster> monste
 	}
 	else return false;
 }
-
 bool BattleManager::IsPoisonAttack(shared_ptr<Monster> monster) 
 {
 	
@@ -386,3 +383,12 @@ bool BattleManager::IsPoisonAttack(shared_ptr<Monster> monster)
 	}
 	return false;
 }
+
+//void addRecord(const std::string& result, const std::string& monsterName, int playerHP, int gold, int exp) {
+//	records.push_back({ result, monsterName, playerHP, gold, exp });
+//}
+
+//void BattleManager::showRecords() const
+//{
+//
+//}

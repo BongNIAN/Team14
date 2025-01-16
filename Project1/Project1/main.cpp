@@ -5,7 +5,6 @@
 #include "item.h"
 #include "shop.h"
 #include "print.h"
-#include "observer.h"
 #include "battlemanager.h"
 
 
@@ -19,10 +18,13 @@ int main() {
     shared_ptr<Item> item2 = make_shared<AttackBoost>();
     BattleManager TestBossMonster;
     BattleManager TestMonster;
-    Shop s;
-    c->visitShop();
+   /* Shop s;
+    c->increaseGold(3000);
+    c->visitShop();*/
 
-  /*
+
+
+  
     int cnt = 0;
     while (cnt < 10)
     {
@@ -53,7 +55,7 @@ int main() {
         } } 
         
 
-        return 0;*/
+        return 0;
    
 
 }
