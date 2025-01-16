@@ -25,9 +25,6 @@ int BattleManager::BossBattle(Character* c)
 	return BattleResult;
 
 }
-
-
-
 /**return 1 : victory, return 2 : defeat , return 3 : run */
 /**checkThrough : 1. 선어택  , 0 : 선어택 맞지 않음  */
 int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {

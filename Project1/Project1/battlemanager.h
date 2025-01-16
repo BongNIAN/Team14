@@ -34,8 +34,7 @@ public:
 		delete[] record;
 	}
 
-	/**임시 저장용*/
-	void Battle(Character* c);
+	
 	/**보스와의 전투*/
 	int BossBattle(Character* c);
 	/**일반 몬스터와의 전투*/

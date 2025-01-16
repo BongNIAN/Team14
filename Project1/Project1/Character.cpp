@@ -28,6 +28,10 @@ Character* Character::getInstance(std::string name) {
     if (instance == nullptr) {
         instance = new Character(name);
     }
+    if (name == "")
+    {
+        std::cout << "제대로 입력해 주세요 !" << std::endl;
+    }
     return instance;
 }
 

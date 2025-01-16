@@ -57,6 +57,7 @@ int HealthPotion::getPrice() const
 }
 
 
+
 ItemForQuest::ItemForQuest() : name("ItemForQuest") ,price(1){}
 
 void ItemForQuest::use(Character* character) {

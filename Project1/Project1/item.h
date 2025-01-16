@@ -20,7 +20,6 @@ public:
 
     // 순수 가상 함수: 아이템 사용
     virtual void use(Character* character) = 0;
-
     // 아이템 이름 반환
     virtual std::string getName() const = 0;
     virtual int getPrice() const = 0;

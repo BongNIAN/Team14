@@ -234,7 +234,7 @@ void startGame() {
                 startGame();  // ¥ŸΩ√ º±≈√¿ª «“ ºˆ ¿÷µµ∑œ
                 break;
             }
-
+            cout << "Game End «√∑π¿Ã«ÿ¡÷º≈º≠ ∞®ªÁ«’¥œ¥Ÿ " << endl;
 
         }
     }
@@ -293,46 +293,17 @@ void mainMenu() {
         mainMenu();
         break;
     }
-<<<<<<< HEAD
-=======
-    c->displayInventory();
-    cout << ItemCnt << endl;
-    cout << "\n";*/
-    /*
-    * ?ÑÏû¨ ?§Î¶ÑÏ∞®Ïàú?ºÎ°ú ?ïÎ†¨?òÏñ¥ ?àÍ∏∞ ?åÎ¨∏??[0] = AttackBoost
-    * [1] = HealthPotion
-    * [2] = QuestForItem
-    **/
-    /* c->displayStatus();
-     c->useItem(0);
-     c->displayStatus();
-     c->useItem(2);
-     c->displayStatus();
-     c->useItem(1);
-     c->displayStatus();
-     cout << "\n";
-     c->displayInventory();
-     cout << "\n";
-
-     cout << "display Status start" << endl;
-     c->displayStatus();
-     cout << "display Status end" << endl;
-     cout << "\n";
-     c->displayInventory();
-     cout << "start" << endl;*/
-
-     /**?¥Î?Î∂??êÎü¨ ->?¨Î∞îÎ•¥Ï? ?äÏ? nullptr???§Ïñ¥Í∞ÑÎã§Î©? Ï§ëÎã®??*/
-     // c->addItem(HealthPotion, 3); 
-     // HealthPotion??null?¥ÎùºÎ©?Ï§ëÎã®Ï≤òÎ¶¨ 
-     // Î©îÏÑú??ItemManager add?®Ïàò??nullÍ∞?Ï≤òÎ¶¨ ?ÑÎ£å 
->>>>>>> bd4c95962519af93260a21ff91642175edfef7c5
-
-
 }
 
 int main() {
     // ∞‘¿”¿« ∏ﬁ¿Œ ∏ﬁ¥∫∏¶ «•Ω√
+   /* mainMenu();*/
+
     mainMenu();
+   /* Character* c = Character::getInstance("name");
+    c->displayStatus();
+   */
+
 
     return 0;
 }
