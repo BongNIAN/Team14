@@ -41,7 +41,7 @@ bool StageManager::isStageClear(Character* c) {
 void StageManager::battleStage(Character* c) {
     // 일반 전투 스테이지
     BattleManager battleManager;
-    battleManager.Battle(c); // BattleManager를 통해 전투 진행
+    battleManager.MonsterBattle(c); // BattleManager를 통해 전투 진행
 
     // 전투가 끝난 후 도망 갔을 때는 스테이지가 상승하지 않도록 처리
     if (battleManager.fled) {
@@ -55,7 +55,7 @@ void StageManager::bossStage(Character* c) {
     // 보스 전투 스테이지
     std::cout << "보스가 나타났습니다!" << std::endl;
     BattleManager battleManager;
-    battleManager.Battle(c); // 보스 전투
+    battleManager.BossBattle(c); // 보스 전투
 
     // 전투가 끝난 후 도망 갔을 때는 스테이지가 상승하지 않도록 처리
     if (battleManager.fled) {
@@ -80,9 +80,9 @@ void StageManager::nextStage() {
 
 void StageManager::checkStageUp(Character* c) {
     // 전투 횟수에 따라 스테이지 업 여부 확인
-    int battlesRequiredForNextStage = currentStage * 5; // 예시: 각 스테이지당 5번의 전투가 필요
+    int battlesRequiredForNextStage = currentStage * 1; // 예시: 각 스테이지당 1번의 전투가 필요
     if (c->getBattleCount() >= battlesRequiredForNextStage) {
-        std::cout << "전투 횟수로 인해 스테이지가 상승합니다!" << std::endl;
+        
         nextStage(); // 전투 횟수에 따라 스테이지 업
     }
 }

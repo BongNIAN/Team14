@@ -18,7 +18,6 @@ public:
     virtual void TakeDamage(int damage) = 0;
     virtual shared_ptr<Item> DropItem() = 0;
     virtual ~Monster() = default;
-    virtual bool IsPoison() const = 0;
 };
 
 /** Goblin Monster Class */
@@ -30,7 +29,7 @@ public:
     int GetAttack() const override;
     void TakeDamage(int damage) override;
     shared_ptr<Item> DropItem() override;
-    bool IsPoison() const;
+
 private:
     string Name;
     int Health;
@@ -46,7 +45,7 @@ public:
     int GetAttack() const override;
     void TakeDamage(int damage) override;
     shared_ptr<Item> DropItem() override;
-    bool IsPoison() const;
+
 private:
     string Name;
     int Health;
@@ -62,7 +61,7 @@ public:
     int GetAttack() const override;
     void TakeDamage(int damage) override;
     shared_ptr<Item> DropItem() override;
-    bool IsPoison() const;
+
 private:
     string Name;
     int Health;
@@ -79,7 +78,7 @@ public:
     int GetAttack() const override;
     void TakeDamage(int damage) override;
     shared_ptr<Item> DropItem() override;
-    bool IsPoison() const;
+
 protected:
     shared_ptr<Monster> monster;
 };
@@ -93,7 +92,7 @@ public:
     int GetAttack() const override;
     void TakeDamage(int damage) override;
     shared_ptr<Item> DropItem() override;
-    bool IsPoison() const;
+
 private:
     string Name;
     int Health;
@@ -109,7 +108,6 @@ public:
     int GetAttack() const override;
     void TakeDamage(int damage) override;
     shared_ptr<Item> DropItem() override;
-    bool IsPoison() const;
 
 private:
     string Name;
