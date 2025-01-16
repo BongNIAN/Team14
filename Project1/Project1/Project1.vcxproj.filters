@@ -39,12 +39,6 @@
     <ClCompile Include="battlemanager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Gamemanager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="stageManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -74,7 +68,10 @@
     <ClInclude Include="battlemanager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="stageManager.h">
+    <ClInclude Include="resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

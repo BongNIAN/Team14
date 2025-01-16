@@ -95,25 +95,7 @@ void printMonsterTestModule(std::shared_ptr<Monster> m) {
     std::cout << "attack : " << m->GetAttack() << std::endl;
     std::cout << "name : " << m->GetName() << std::endl;
 }
-void printDragon() 
-{
-    cout << R"(
-(  )   /\   _                 (     
-    \ |  (  \ ( \.(               )                      _____
-  \  \ \  `  `   ) \             (  ___                 / _   \
- (_`    \+   . x  ( .\            \/   \____-----------/ (o)   \_
-- .-               \+  ;          (  O                           \____
-                          )        \_____________  `              \  /
-(__                +- .( -'.- <. - _  VVVVVVV VV V\                 \/
-(_____            ._._: <_ - <- _  (--  _AAAAAAA__A_/                  |
-  .    /./.+-  . .- /  +--  - .     \______________//_              \_______
-  (__ ' /x  / x _/ (                                  \___'          \     /
- , x / ( '  . / .  /                                      |           \   /
-    /  /  _/ /    +                                      /              \/
-   '  (__/                                             /                  \
-        )" << endl;
 
-}
 
 void drawHpBar(int currentHp, int maxHp, int barLength) {
     int filledLength = (currentHp * barLength) / maxHp;

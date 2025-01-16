@@ -1,185 +1,16 @@
 #include "battlemanager.h"
 #include "print.h"
 #include "random.h" 
-#include "stageManager.h"
-
-/** 혹시 오류생기면 교체할 모델입니다 삭제 노노!*/
-void BattleManager :: Battle(Character *c) 
-{
-
-	MonsterFactory m;
-	int InvenSelection = 1000;
-	//몬스터 생성
-	shared_ptr<Monster> tmp = m.CreateMonster(c->getLevel());
-	int CheckThrough = 1;
-	while (1)
-	{
-
-		int selection = 1000; // 초기화
-		PrintSelection();
-		cout << "만일..도망가기를 실패한다면..."
-			<< "많이 맞을 수 있소.. 거기에 골드도 떨어지오.."
-			<< endl;
-
-		cin >> selection;
-
-		if (IsCreateEvent(30) && CheckThrough != 0)
-		{
-			cout << "몬스터 선 공격!" << endl;
-			c->takeDamage(tmp->GetAttack());
-			if (c->getHP() <= 0)
-			{
-				cout << "im BM , you die" << endl;
-				break;
-			}
-		}
+#include <iostream>
 
 
-		switch (selection)
-		{
-		case(1) : 
-			CheckThrough = 1;
-			
-			cout << "플레이어 공격 : " << c->getATK() << endl;
-			tmp->TakeDamage(c->getATK());
-			if(tmp->GetHealth() <= 0)
-			{ 
-				cout << "획득경험치 : 40 ";  
-				c->setEXP(50);
-
-				int gold = GenerateRandom(10, 20);
-				cout << "획득 골드" << gold << endl;
-				c->increaseGold(gold);
-
-				shared_ptr<Item> tmpItem = tmp->DropItem();
-
-				if (tmpItem != nullptr)
-				{
-					cout << "item : " << tmpItem->getName();
-					cout << "\n";
-				}
-				else 
-				{
-					cout << "몬스터 드랍 아무것도 안됨" << endl;
-				}
-
-				CheckThrough = 100;
-				InvenSelection = 0;
-				break;
-			}
-			c->takeDamage(tmp->GetAttack());
-			if (c->getHP() <= 0)
-			{
-				cout << "im BM , you die" << endl;
-				CheckThrough = 100;
-				InvenSelection = 0;
-				break;
-			}
-
-			InvenSelection = 0;
-			break;
-
-		case(2):
-			
-
-			
-			
-			c->displayInventory();
-			cout << "사용할 아이템을 고르세요" << endl;
-			cout << "인벤토리 닫기는 9을 써주세요 ! " << endl;
-			cin >> InvenSelection;
-
-		
-			if (InvenSelection == 9)
-			{
-				CheckThrough = 0;
-				break;
-			}
-			c->useItem(InvenSelection);
-			CheckThrough = 1;
-			break;
-			
-
-
-		case(3) : // 도망가기
-			
-			// 실패 한대 얻어맞고 또 확률적으로 얻어맞고 
-			if (IsCreateEvent(50))
-			{
-				CheckThrough = 100;
-				cout << "탈출 성공 축하드려요 ㅎㅎ" << endl;
-				//이건 전투를 탈출하는거니깐  전투 전으로 
-				InvenSelection = 0;
-				fled = true;
-				break;
-			}
-			
-
-			cout << "도망 실패 일단 한대 맞아 그리고  10골드를 내놔 " << endl;
-			// set gold c->
-			c->takeDamage(tmp->GetAttack());
-			if (c->getHP() <= 0)
-			{
-				CheckThrough = 100;
-				cout << "im BM , you die" << endl;
-				InvenSelection = 0;
-				fled = false;
-				break;
-			}
-
-			if (c->getGold() < 10) {
-				cout << "돈 없음 플레이어" << endl;
-			}
-			c->decreaseGold(10);
-			
-			c->displayStatus();
-			
-			CheckThrough = 1;
-			InvenSelection = 0;
-			break;
-			
-			
-		case(4) : 
-			
-			
-			c->displayStatus();
-			CheckThrough = 0;
-			InvenSelection = 0;
-			break;
-
-		default: 
-			cout << "제대로 번호를 고르세요 " << endl;
-			InvenSelection = 0;
-			break;
-		}
-		
-
-
-		//얘가 가장먼저 돌아야함
-		if (CheckThrough == 100) {
-			if (!fled) {
-				c->increasebattleCount(); //전투 횟수 증가
-
-				StageManager stageManager;
-				stageManager.checkStageUp(c); // 스테이지를 올릴지 확인
-			}
-			break;
-		}
-		
-	
-		
-	}
-
-
-
-}
 
 /**Refactoring Battle*/
 int BattleManager::MonsterBattle(Character* c) 
 {
 	int InvenSelection = 1000;
 	shared_ptr<Monster> monster = monsterFactory.CreateMonster(c->getLevel());
-	cout << "일반 몬스터..그르르릉 드장! 내 이름은?!!! : " << monster->GetName() << endl;
+	std::cout << "일반 몬스터..그르르릉 드장! 내 이름은?!!! : " << monster->GetName() << std::endl;
 	int BattleResult = HandleBattle(c, monster);
 	return BattleResult;
 }
@@ -342,7 +173,7 @@ bool BattleManager::HandlePlayerAttack(Character* c, shared_ptr<Monster> monster
 		// 플레이어 중독상태
 		c->displayStatus();
 		std::cout << "중독으로 인해 추가 데미지 1이 들어옵니다." << std::endl;
-		c->takeDamage(120); // 중독으로 인해 1 데미지
+		c->takeDamage(1); // 중독으로 인해 1 데미지
 		c->displayStatus();
 		if (c->getHP() <= 0)
 		{

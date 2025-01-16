@@ -2,7 +2,6 @@
 #include "ItemManager.h" 
 #include "Item.h"
 #include "Shop.h"
-#include "stageManager.h"
 #include "print.h"
 #include <iostream> 
 #include <algorithm> 
@@ -117,7 +116,7 @@ void Character::takeDamage(int damage) {
     if (health < 0) 
     {
         health = 0;
-        cout << "im character , Player Death" << endl;
+        std::cout << "im character , Player Death" << std::endl;
     }
 }
 
