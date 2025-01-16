@@ -115,7 +115,7 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 				CheckThrough = 0;
 				break;
 			}
-			c->useItem(1);
+			c->useItem(InvenSelection);
 			CheckThrough = 1;
 			break;
 		}
