@@ -133,8 +133,6 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="monster.cpp" />
-    <ClCompile Include="observer.cpp" />
-    <ClCompile Include="print.cpp" />
     <ClCompile Include="random.cpp" />
     <ClCompile Include="shop.cpp" />
     <ClCompile Include="stageManager.cpp" />
@@ -146,8 +144,6 @@
     <ClInclude Include="item.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="monster.h" />
-    <ClInclude Include="observer.h" />
-    <ClInclude Include="print.h" />
     <ClInclude Include="random.h" />
     <ClInclude Include="shop.h" />
     <ClInclude Include="stageManager.h" />

@@ -2,15 +2,14 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-
-using namespace std;
-
 #include "Character.h"
 #include "ItemManager.h"
 #include "item.h"
 #include "battlemanager.h"
 #include "EventManager.h"
 #include "stageManager.h"
+
+using namespace std;
 
 // 게임 종료 함수
 void quitGame() {

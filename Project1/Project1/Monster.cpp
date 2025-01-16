@@ -47,6 +47,11 @@ shared_ptr<Item> Goblin::DropItem() {
     cout << "I am Goblin, No Drop." << endl;
     return nullptr;
 }
+bool Goblin::IsPoison() const
+{
+    return false;
+}
+
 
 // Troll Implementation
 Troll::Troll(int level) {
@@ -90,7 +95,10 @@ shared_ptr<Item> Troll::DropItem() {
     
     return nullptr;
 }
-
+bool Troll::IsPoison() const
+{
+    return false;
+}
 // Orc Implementation
 Orc::Orc(int level) {
     Name = "ø¿≈©";
@@ -132,7 +140,10 @@ shared_ptr<Item> Orc::DropItem() {
     
     return nullptr;
 }
-
+bool Orc::IsPoison() const
+{
+    return false;
+}
 // MonsterDecorator Implementation
 MonsterDecorator::MonsterDecorator(shared_ptr<Monster> m) : monster(move(m)) {}
 
@@ -158,6 +169,10 @@ void MonsterDecorator::TakeDamage(int damage) {
 
 shared_ptr<Item> MonsterDecorator::DropItem() {
     return monster->DropItem();
+}
+bool MonsterDecorator::IsPoison() const
+{
+    return false;
 }
 
 // BossMonster Implementation
@@ -207,6 +222,10 @@ shared_ptr<Item> BossMonster::DropItem() {
     
     return nullptr;
 }
+bool BossMonster::IsPoison() const
+{
+    return false;
+}
 
 // PoisonMonster Implementation
 PoisonMonster::PoisonMonster(shared_ptr<Monster> m) : MonsterDecorator(move(m)) {
@@ -224,10 +243,15 @@ int PoisonMonster::GetHealth() const {
 }
 
 int PoisonMonster::GetAttack() const {
-    if (IsCreateEvent(10)) {
-        return Attack + 1;
-    }
+   
     return Attack;
+}
+bool PoisonMonster::IsPoison() const
+{
+    if (IsCreateEvent(50)) {
+        return true;
+    }
+    return false;
 }
 
 void PoisonMonster::TakeDamage(int damage) {
@@ -237,7 +261,7 @@ void PoisonMonster::TakeDamage(int damage) {
         Health = 0;
     }
 
-    cout << Name << "  took " << damage << " damage. Remaining health: " << Health << endl;
+   
 }
 
 shared_ptr<Item> PoisonMonster::DropItem() {
@@ -255,14 +279,15 @@ shared_ptr<Item> PoisonMonster::DropItem() {
             return make_shared<AttackBoost>();
         }
     }
-    
+   
     return nullptr;
 }
 
 // MonsterFactory Implementation
 shared_ptr<Monster> MonsterFactory::CreateMonster(int level) const {
     shared_ptr<Monster> tmp = CreateMonsterFunc(level);
-    if (GenerateRandom(1, 10) == 1) {
+   
+ if (GenerateRandom(1, 10) == 1) {
         tmp = make_shared<PoisonMonster>(tmp);
        
     }

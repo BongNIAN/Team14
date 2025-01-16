@@ -8,7 +8,7 @@ Shop::Shop() {
     // 상점에서 판매하는 아이템 목록 초기화
     shopItems.push_back(std::make_shared<HealthPotion>());
     shopItems.push_back(std::make_shared<AttackBoost>());
-   
+    shopItems.push_back(std::make_shared<Antidote>());
 }
 
 Shop::~Shop() {

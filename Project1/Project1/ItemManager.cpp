@@ -82,6 +82,10 @@ int ItemManager::getItemQuantity(std::shared_ptr<Item> item) const {
     }
     return 0;  // 아이템이 없으면 0 반환
 }
+int ItemManager::getItemSize()
+{
+    return itemQuantities.size();
+}
 
 std::vector<std::shared_ptr<Item>> ItemManager::getInventory() {
     return inventory;

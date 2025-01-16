@@ -2,7 +2,6 @@
 #include "ItemManager.h" 
 #include "Item.h"
 #include "Shop.h"
-#include "Observer.h" 
 #include "stageManager.h"
 #include <iostream> 
 #include <algorithm> 
@@ -20,6 +19,7 @@ Character::Character(std::string name) : name(name) {
     gold = 0;
     battleCount = 0;
     itemManager = std::make_shared<ItemManager>();
+    IsPoison = false;
 }
 
 // Singleton 인스턴스 반환
@@ -57,23 +57,6 @@ Character::~Character() {
     
 }
 
-void Character::Attach(const std::shared_ptr<IPlayerObserver>& observer) {
-    observers.push_back(observer); // 옵저버를 리스트에 추가
-}
-
-void Character::Detach(const std::shared_ptr<IPlayerObserver>& observer) {
-    // 옵저버를 리스트에서 제거
-    observers.erase(std::remove(observers.begin(), observers.end(), observer), observers.end());
-}
-
-void Character::Notify() {
-    // 모든 옵저버에게 현재 상태를 알림
-    for (const auto& observer : observers) {
-        PlayerHp hp = { health, maxHealth }; 
-        observer->UpdatePlayer(hp);          // 옵저버의 UpdatePlayer 호출
-    }
-}
-
 
 
 // 캐릭터 상태 출력
@@ -85,6 +68,9 @@ void Character::displayStatus() const {
     std::cout << "Experience: " << experience << std::endl;
     std::cout << "Gold: " << gold << std::endl;
     std::cout << "stage " << battleCount << std::endl;
+    std::cout << "Defense " << defense << std::endl;
+    std::cout << "IsPoison " << IsPoison << std::endl;
+
 }
 
 // 레벨 업
@@ -98,17 +84,37 @@ void Character::levelUp() {
 }
 
 // 체력 증가
-void Character::increaseHP(int amount) {
+void Character::increaseHP(int amount)
+{
     health = std::min(health + amount, maxHealth);
-    PlayerHp hpp = { health,maxHealth };
-    Character::Notify();
+}
+
+// defense getter
+int Character::getDefense() const {
+    return defense;
+}
+
+// defense Setter
+void Character::setDefense(int amount) {
+    if (amount < 0) {
+        std::cout << "방어력은 음수가 될 수 없습니다.\n";
+        defense = 0; // 방어력은 최소 0으로 설정
+    }
+    else {
+        defense = amount;
+    }
 }
 
 // 데미지 처리
 void Character::takeDamage(int damage) {
+   
     health -= damage;
-    if (health < 0) health = 0;
-    Character::Notify();
+    if (health < 0)
+    {
+        health = 0;
+        std::cout << "im character , Player Death" << std::endl;
+    }
+    
 }
 
 // 공격력 증가
@@ -213,11 +219,13 @@ void Character::visitShop() {
 
     while (inShop) {
         // 메뉴 표시 (상점 아이템은 구매 선택 시에만 표시)
-        std::cout << "\n==== 상점에 오신 것을 환영합니다! ====\n";
-        std::cout << "1. 아이템 구매\n";
-        std::cout << "2. 아이템 판매\n";
-        std::cout << "3. 상점 나가기\n";
-        std::cout << "번호를 선택하세요: ";
+        std::cout << " =====================================" << endl;
+        std::cout << "ㅣ    상점에 오신 것을 환영합니다!   ㅣ" << endl;
+        std::cout << "ㅣ         1. 아이템 구매            ㅣ"<< endl;
+        std::cout << "ㅣ         2. 아이템 판매            ㅣ" << endl;
+        std::cout << "ㅣ         3. 상점 나가기            ㅣ" << endl;
+        std::cout << " =====================================" << endl;
+        std::cout << "번호를 선택하세요 : " << endl;
         std::cin >> choice;
 
         switch (choice) {
@@ -234,14 +242,13 @@ void Character::visitShop() {
                 std::cout << "구매에 실패했습니다.\n";
             }
             std::cout << "===============================" << std::endl;
-            std::cout << "ⓖ 골드: " << gold << std::endl;
-            std::cout << " " << std::endl;
+            std::cout << "ⓖ 골드: " << gold << std::endl;           
             std::cout << "♥ 물약: " << getItemQuantity(std::make_shared<HealthPotion>()) << std::endl;
-            std::cout << " " << std::endl;
             std::cout << "↑ 공증: " << getItemQuantity(std::make_shared<AttackBoost>()) << std::endl;
+            std::cout << "※ 해독제: " << getItemQuantity(std::make_shared<Antidote>()) << std::endl;
             std::cout << "===============================" << std::endl;
             break;
-        }//
+        }
               // 아이템 판매 처리
         case 2: {
             std::cout << "당신의 인벤토리:\n";
@@ -272,4 +279,8 @@ void Character::visitShop() {
 // 독 상태 확인
 bool Character::isPoison() const {
     return false;
+}
+void Character::setPoison(bool state)
+{
+    IsPoison = state;
 }

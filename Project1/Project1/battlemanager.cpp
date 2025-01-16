@@ -51,11 +51,18 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 	bool IsDefeat = false;
 
 	while (true) {
-		if (IsCreateEvent(30) && CheckThrough != 0) {
-			cout << monster->GetName() << " 선제 공격!" << endl;
+		if (IsCreateEvent(30) && CheckThrough == 1) {
+			cout << monster->GetName() << " 기습!" << endl;
+			IsDefeat = HandleMonsterAttack(c, monster);
+			if (IsPoisonAttack(monster) && !c->isPoison())
+			{
+				std::cout << "플레이어가 중독되었습니다!" << std::endl;
+				c->setPoison(true); // 플레이어 상태를 중독으로 변경
+			}
 			IsDefeat = HandleMonsterAttack(c, monster);
 			if (IsDefeat)
 			{
+				addRecord("Defeat", monster->GetName(), 0, 0, 0);
 				return 2;
 			}
 			cout << "공격 후 스테이터스 " << endl;
@@ -75,6 +82,11 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			cout << "플레이어 공격! " << c->getATK() << "의 데미지!" << endl;
 			
 			IsWin = HandlePlayerAttack(c, monster);
+			if (!IsWin && c->getHP() <= 0)
+			{
+				addRecord("Defeat", monster->GetName(), 0, 0, 0);
+				return 2;
+			}
 			if (IsWin) 
 			{
 				return 1;
@@ -84,6 +96,7 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			IsDefeat = HandleMonsterAttack(c, monster);
 			if (IsDefeat) 
 			{
+				addRecord("Defeat", monster->GetName(), 0, 0, 0);
 				return 2;
 			}
 			
@@ -123,7 +136,7 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 				stageManager.setstageUpWhenFlee(false);
 				
 				fled = true;
-
+				addRecord("Run", monster->GetName(), 0, 0, 0);
 				return 3; // 전투 종료
 			}
 
@@ -131,6 +144,7 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			IsDefeat = HandleMonsterAttack(c, monster);
 			if (IsDefeat)
 			{
+				addRecord("Defeat", monster->GetName(), 0, 0, 0);
 				return 2;
 			}
 
@@ -147,7 +161,11 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			
 			break;
 		}
-		
+		case 5: {
+			showRecords();
+			CheckThrough = 0;
+			break;
+		}
 		default:
 			cout << "잘못된 선택이야. 다시 입력해줘." << endl;
 			break;
@@ -164,11 +182,24 @@ void BattleManager::PrintSelection()
 	cout << "ㅣ          2. 인벤토리            ㅣ" << endl;
 	cout << "ㅣ       3. 캐릭터 상태 확인       ㅣ" << endl;
 	cout << "ㅣ          4. 도망간다            ㅣ" << endl;
+	cout << "ㅣ       5. 전적 확인(미구현)      ㅣ" << endl;
 	cout << " ===================================" << endl;
 }
 
 bool BattleManager::HandlePlayerAttack(Character* c, shared_ptr<Monster> monster)
 {
+	if (c->isPoison()) {
+		// 플레이어 중독상태
+		c->displayStatus();
+		std::cout << "중독으로 인해 추가 데미지 1이 들어옵니다." << std::endl;
+		c->takeDamage(1); // 중독으로 인해 1 데미지
+		c->displayStatus();
+		if (c->getHP() <= 0)
+		{
+			return false;
+		}
+
+	}
 	monster->TakeDamage(c->getATK());
 	if (monster->GetHealth() <= 0) {
 		cout << "몬스터 처치! 경험치와 골드를 얻었다." << endl;
@@ -185,12 +216,19 @@ bool BattleManager::HandlePlayerAttack(Character* c, shared_ptr<Monster> monster
 		else {
 			cout << "몬스터가 아이템을 드롭하지 않았습니다." << endl;
 		}
+		addRecord("Victory", monster->GetName(), c->getHP(), gold, 50);
 		return true; // 몬스터 사망
 	}
 	else return false;
 }
 bool BattleManager::HandleMonsterAttack(Character* c, shared_ptr<Monster> monster)
 {
+	if (IsPoisonAttack(monster) && !c->isPoison()) {
+		// 몬스터가 독공격 && 플레이어 일반상태
+		std::cout << "플레이어가 중독되었습니다!" << std::endl;
+		c->setPoison(true); // 플레이어 상태를 중독으로 변경
+	}
+
 	cout << monster->GetName() << " 의 공격! "<<monster->GetAttack() << " 의 데미지!" << endl;
 	c->takeDamage(monster->GetAttack());
 	if (c->getHP() <= 0) {
@@ -199,10 +237,36 @@ bool BattleManager::HandleMonsterAttack(Character* c, shared_ptr<Monster> monste
 	}
 	else return false;
 }
+bool BattleManager::IsPoisonAttack(shared_ptr<Monster> monster)
+{
 
-//TODO : 2)TODO : userState by Observer
-
-// 3) todo : item사용 MAP Item기반 searching
-
-// 4) todo :  스테이지로 돌아가는 기능 추가
+	if (monster->IsPoison())
+	{
+		return true;
+	}
+	return false;
+}
+void BattleManager::addRecord(const std::string& result, const std::string& monsterName, int playerHP, int goldEarned, int experienceGained) {
+	record[recordsCnt].result = result;
+	record[recordsCnt].monsterName = monsterName;
+	record[recordsCnt].playerHP = playerHP;
+	record[recordsCnt].goldEarned = goldEarned;
+	record[recordsCnt].experienceGained = experienceGained;
+	recordsCnt++;
+}
+void BattleManager::showRecords() const
+{
+	if (recordsCnt == 0)
+	{
+		std::cout << "전투 전적이 없습니다." << std::endl;
+		return;
+	}
+	for (int i = 0; i < recordsCnt; i++)
+	{
+		std::cout << "결과: " << record[i].result << ", 몬스터: " << record[i].monsterName
+			<< ", 플레이어 HP: " << record[i].playerHP
+			<< ", 획득 골드: " << record[i].goldEarned
+			<< ", 획득 경험치: " << record[i].experienceGained << std::endl;
+	}
+}
 
