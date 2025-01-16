@@ -17,6 +17,7 @@ Character::Character(std::string name) : name(name) {
     health = maxHealth;
     attack = 30;
     experience = 0;
+    defense = 0;
     gold = 0;
     battleCount = 0;
     itemManager = std::make_shared<ItemManager>();
@@ -65,12 +66,14 @@ Character::~Character() {
 void Character::displayStatus() const {
     std::cout << "Name: " << name << std::endl;
     std::cout << "Level: " << level << std::endl;
-    drawHpBar(health, maxHealth);
-    std::cout << "Attack: " << attack << std::endl;
+    drawHpBar(health, maxHealth); 
     drawExpBar(experience, 100);
+    std::cout << "Attack: " << attack << std::endl;
     std::cout << "Gold: " << gold << std::endl;
     std::cout << "stage " << battleCount << std::endl;
+    std::cout << "Defense " << defense << std::endl;
     std::cout << "IsPoison " << IsPoison << std::endl;
+
 }
 
 // 레벨 업
@@ -89,9 +92,28 @@ void Character::increaseHP(int amount)
     health = std::min(health + amount, maxHealth);
 }
 
+// defense getter
+int Character::getDefense() const {
+    return defense;
+}
+
+// defense Setter
+void Character::setDefense(int amount) {
+    if (amount < 0) {
+        std::cout << "방어력은 음수가 될 수 없습니다.\n";
+        defense = 0; // 방어력은 최소 0으로 설정
+    }
+    else {
+        defense = amount;
+    }
+}
+
+
 // 데미지 처리
 void Character::takeDamage(int damage) {
+
     health -= damage;
+    //이부분 방어력인데 독딜들어오는것때문에 안될것같은데 
     if (health < 0) 
     {
         health = 0;

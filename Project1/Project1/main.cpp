@@ -9,31 +9,23 @@
 
 
 
+
+
 int main() {
     InitializeRandom();
     
-
     Character* c = Character::getInstance("hero");
     shared_ptr<Item> item = make_shared<HealthPotion>();
     shared_ptr<Item> item2 = make_shared<AttackBoost>();
     BattleManager TestBossMonster;
     BattleManager TestMonster;
-   /* Shop s;
-    c->increaseGold(3000);
-    c->visitShop();*/
-
-
-
-  
     int cnt = 0;
     while (cnt < 10)
     {
         TestMonster.MonsterBattle(c);
         cnt++;
-
-
         int BattleResult = 100;
-
+        c->setDefense(10);
 
         for (int i = 0; i < 10; i++)
         {
@@ -53,7 +45,6 @@ int main() {
             }
 
         } } 
-        
 
         return 0;
    

@@ -196,6 +196,7 @@ int BattleManager::BossBattle(Character* c)
 }
 
 
+
 /**return 1 : victory, return 2 : defeat , return 3 : run */
 /**checkThrough : 1. 선어택  , 0 : 선어택 맞지 않음  */
 int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
@@ -222,6 +223,7 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			IsDefeat = HandleMonsterAttack(c, monster);
 			if (IsDefeat)
 			{
+				addRecord("Defeat", monster->GetName(), 0, 0, 0);
 				return 2;
 			}
 			cout << "선 공격 후 스테이터스 " << endl;
@@ -241,10 +243,12 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			IsWin = HandlePlayerAttack(c, monster);
 			if (!IsWin && c->getHP() <= 0)
 			{
+				addRecord("Defeat", monster->GetName(), 0, 0, 0);
 				return 2;
 			}
 			if (IsWin) 
 			{
+				
 				return 1;
 			}
 			//리턴값 받아오기 
@@ -252,6 +256,7 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			IsDefeat = HandleMonsterAttack(c, monster);
 			if (IsDefeat) 
 			{
+				addRecord("Defeat", monster->GetName(), 0, 0, 0);
 				return 2;
 			}
 			
@@ -279,6 +284,7 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 
 			if (IsCreateEvent(50)) {
 				cout << "탈출 성공!" << endl;
+				addRecord("Run", monster->GetName(), 0, 0, 0);
 				return 3; // 전투 종료 (탈출)
 			}
 
@@ -286,6 +292,7 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			IsDefeat = HandleMonsterAttack(c, monster);
 			if (IsDefeat)
 			{
+				addRecord("Defeat", monster->GetName(), 0, 0, 0);
 				return 2;
 			}
 
@@ -307,6 +314,12 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			CheckThrough = 0;
 			break;
 		}
+		case 5: 
+		{
+			showRecords();
+			CheckThrough = 0;
+			break;
+		}
 		default:
 			cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
 			break;
@@ -319,10 +332,12 @@ void BattleManager::PrintSelection()
 		 <<"   " << "2 : 아이템 사용" // Inventory
 		<< "   " << "3 : 도망가기"
 		<< "   " << "4 : 스테이터스 확인"
+		<< "   " << "5 : 전투 로그 출력"
 		<< endl;;
 }
 bool BattleManager::HandlePlayerAttack(Character* c, shared_ptr<Monster> monster)
 {
+	
 	if (c->isPoison()) {
 		// 플레이어 중독상태
 		c->displayStatus();
@@ -354,6 +369,7 @@ bool BattleManager::HandlePlayerAttack(Character* c, shared_ptr<Monster> monster
 		//check
 		cout << "몬스터 사망 후 스테이터스" << endl;
 		c->displayStatus();
+		addRecord("Victory", monster->GetName(),c->getHP(),gold,50);
 		return true; // 몬스터 사망
 	}
 	else return false;
@@ -366,8 +382,8 @@ bool BattleManager::HandleMonsterAttack(Character* c, shared_ptr<Monster> monste
 		c->setPoison(true); // 플레이어 상태를 중독으로 변경
 	}
 
-	cout << monster->GetName() << " 의 공격 ! 데미지 : "<<monster->GetAttack() << "를 입습니다." << endl;
-	c->takeDamage(monster->GetAttack());
+	cout << monster->GetName() << " 의 공격 ! 데미지 : "<<monster->GetAttack()-c->getDefense() << "를 입습니다." << endl;
+	c->takeDamage(monster->GetAttack()- c->getDefense());
 	if (c->getHP() <= 0) {
 		cout << "플레이어가 사망했습니다." << endl;
 		return true; // 플레이어 사망
@@ -383,12 +399,26 @@ bool BattleManager::IsPoisonAttack(shared_ptr<Monster> monster)
 	}
 	return false;
 }
-
-//void addRecord(const std::string& result, const std::string& monsterName, int playerHP, int gold, int exp) {
-//	records.push_back({ result, monsterName, playerHP, gold, exp });
-//}
-
-//void BattleManager::showRecords() const
-//{
-//
-//}
+void BattleManager::addRecord(const std::string& result, const std::string& monsterName, int playerHP, int goldEarned, int experienceGained) {
+	record[recordsCnt].result = result;
+	record[recordsCnt].monsterName = monsterName;
+	record[recordsCnt].playerHP = playerHP;
+	record[recordsCnt].goldEarned = goldEarned;
+	record[recordsCnt].experienceGained = experienceGained;
+	recordsCnt++;
+}
+void BattleManager::showRecords() const
+{
+	if (recordsCnt == 0)
+	{
+		std::cout << "전투 전적이 없습니다." << std::endl;
+		return;
+	}
+	for (int i = 0; i < recordsCnt; i++)
+	{
+		std::cout << "결과: " << record[i].result << ", 몬스터: " << record[i].monsterName
+			<< ", 플레이어 HP: " << record[i].playerHP
+			<< ", 획득 골드: " << record[i].goldEarned
+			<< ", 획득 경험치: " << record[i].experienceGained << std::endl;
+	}
+}
