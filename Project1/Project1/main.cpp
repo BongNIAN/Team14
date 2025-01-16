@@ -18,9 +18,9 @@ int main() {
     shared_ptr<Item> item2 = make_shared<AttackBoost>();
     BattleManager TestBossMonster;
     BattleManager TestMonster;
-   /* Shop s;
+    Shop s;
     c->increaseGold(3000);
-    c->visitShop();*/
+    c->visitShop();
 
 
 
