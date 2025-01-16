@@ -125,7 +125,7 @@ void drawHpBar(int currentHp, int maxHp, int barLength) {
 
     std::string hpBar;
 
-    int filledLengthRed = static_cast<int>(barLength * 0.3);
+    int filledLengthRed = static_cast<int>(barLength * 0.4);
 
     if (filledLength < filledLengthRed) {
         for (int i = 0; i < filledLength; ++i) {

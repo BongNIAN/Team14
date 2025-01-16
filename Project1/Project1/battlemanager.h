@@ -1,7 +1,7 @@
 #ifndef BATTLEMANAGER_H
 #define BATTLEMANAGER_H
 
-#include<memory>
+#include <memory>
 #include "monster.h"
 #include "Character.h"
 #include "shop.h"
@@ -34,12 +34,26 @@ public:
 	
 	bool IsPoisonAttack(shared_ptr<Monster> monster);
 
+	//void addRecord(const std::string& result, const std::string& monsterName, int playerHP, int gold, int exp);
+	//
+	void showRecords() const;
 	/**배틀 화면 출력*/
 	void PrintSelection();
 private:
-	
+	MonsterFactory monsterFactory;
+	BossMonsterFactory bossMonsterFactory;
+	/*std::vector<Record> records;*/
 
 };
+
+//struct Record {
+//	std::string result;  // 승리/패배
+//	std::string monsterName;  // 몬스터 이름
+//	int playerHP;  // 전투 종료 시 플레이어 HP
+//	int goldEarned;  // 획득한 골드
+//	int experienceGained;  // 획득한 경험치
+//};
+
 
 
 #endif
