@@ -2,7 +2,7 @@
 #include "character.h"
 #include <iostream>
 
-using namespace std;
+
 
 
 Item::Item():name("Item"), price(0) {}
@@ -43,11 +43,11 @@ void HealthPotion::use(Character* character)
         int getLv = character->getLevel();
 
         character->increaseHP(getLv * 20);  // 체력 +50 (예시)
-        cout << "im HealthPotion cpp , :hp는 + " << getLv * 20 << endl;
+        std::cout << "im HealthPotion cpp , :hp는 + " << getLv * 20 << std::endl;
     }
 }
 
-string HealthPotion::getName() const {
+std::string HealthPotion::getName() const {
     return this->name;
 }
 
@@ -62,11 +62,11 @@ ItemForQuest::ItemForQuest() : name("ItemForQuest") ,price(1){}
 void ItemForQuest::use(Character* character) {
     if (character) {
         // 특정 퀘스트를 위한 아이템 사용 로직
-        cout << "ItemForQuest used! Quest objective " << endl;
+        std::cout << "ItemForQuest used! Quest objective " << std::endl;
     }
 }
 
-string ItemForQuest::getName() const 
+std::string ItemForQuest::getName() const
 {
     return this->name;
 }
@@ -93,7 +93,7 @@ void Antidote::use(Character* character) {
     std::cout << "해독제를 사용하셨습니다 ! 이제 중독 상태가 치유됩니다" << std::endl;
 }
 
-string Antidote::getName() const
+std::string Antidote::getName() const
 {
     return this->name;
 }

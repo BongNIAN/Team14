@@ -7,7 +7,7 @@
 // 전방 선언
 class Item;
 
-using namespace std;
+
 
 /** Base Monster Class */
 class Monster {

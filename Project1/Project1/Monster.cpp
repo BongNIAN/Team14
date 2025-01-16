@@ -3,7 +3,7 @@
 #include "random.h"
 #include <iostream>
 
-using namespace std;
+
 
 
 // Goblin Implementation

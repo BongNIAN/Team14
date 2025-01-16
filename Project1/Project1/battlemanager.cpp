@@ -2,7 +2,7 @@
 #include "print.h"
 #include "random.h" 
 #include "stageManager.h"
-
+#include <memory>
 /** 혹시 오류생기면 교체할 모델입니다 삭제 노노!*/
 void BattleManager :: Battle(Character *c) 
 {
@@ -17,19 +17,19 @@ void BattleManager :: Battle(Character *c)
 
 		int selection = 1000; // 초기화
 		PrintSelection();
-		cout << "만일..도망가기를 실패한다면..."
+		std::cout << "만일..도망가기를 실패한다면..."
 			<< "많이 맞을 수 있소.. 거기에 골드도 떨어지오.."
-			<< endl;
+			<< std::endl;
 
-		cin >> selection;
+		std::cin >> selection;
 
 		if (IsCreateEvent(30) && CheckThrough != 0)
 		{
-			cout << "몬스터 선 공격!" << endl;
+			std::cout << "몬스터 선 공격!" << std::endl;
 			c->takeDamage(tmp->GetAttack());
 			if (c->getHP() <= 0)
 			{
-				cout << "im BM , you die" << endl;
+				std::cout << "im BM , you die" << std::endl;
 				break;
 			}
 		}
@@ -40,11 +40,11 @@ void BattleManager :: Battle(Character *c)
 		case(1) : 
 			CheckThrough = 1;
 			
-			cout << "플레이어 공격 : " << c->getATK() << endl;
+			std::cout << "플레이어 공격 : " << c->getATK() << std::endl;
 			tmp->TakeDamage(c->getATK());
 			if(tmp->GetHealth() <= 0)
 			{ 
-				cout << "획득경험치 : 40 ";  
+				std::cout << "획득경험치 : 40 ";
 				c->setEXP(50);
 
 				int gold = GenerateRandom(10, 20);
@@ -55,12 +55,12 @@ void BattleManager :: Battle(Character *c)
 
 				if (tmpItem != nullptr)
 				{
-					cout << "item : " << tmpItem->getName();
-					cout << "\n";
+					std::cout << "item : " << tmpItem->getName();
+					std::cout << "\n";
 				}
 				else 
 				{
-					cout << "몬스터 드랍 아무것도 안됨" << endl;
+					std::cout << "몬스터 드랍 아무것도 안됨" << std::endl;
 				}
 
 				CheckThrough = 100;
@@ -70,7 +70,7 @@ void BattleManager :: Battle(Character *c)
 			c->takeDamage(tmp->GetAttack());
 			if (c->getHP() <= 0)
 			{
-				cout << "im BM , you die" << endl;
+				std::cout << "im BM , you die" << std::endl;
 				CheckThrough = 100;
 				InvenSelection = 0;
 				break;
@@ -85,9 +85,9 @@ void BattleManager :: Battle(Character *c)
 			
 			
 			c->displayInventory();
-			cout << "사용할 아이템을 고르세요" << endl;
-			cout << "인벤토리 닫기는 9을 써주세요 ! " << endl;
-			cin >> InvenSelection;
+			std::cout << "사용할 아이템을 고르세요" << std::endl;
+			std::cout << "인벤토리 닫기는 9을 써주세요 ! " << std::endl;
+			std::cin >> InvenSelection;
 
 		
 			if (InvenSelection == 9)
@@ -107,7 +107,7 @@ void BattleManager :: Battle(Character *c)
 			if (IsCreateEvent(50))
 			{
 				CheckThrough = 100;
-				cout << "탈출 성공 축하드려요 ㅎㅎ" << endl;
+				std::cout << "탈출 성공 축하드려요 ㅎㅎ" << std::endl;
 				//이건 전투를 탈출하는거니깐  전투 전으로 
 				InvenSelection = 0;
 				fled = true;
@@ -115,20 +115,20 @@ void BattleManager :: Battle(Character *c)
 			}
 			
 
-			cout << "도망 실패 일단 한대 맞아 그리고  10골드를 내놔 " << endl;
+			std::cout << "도망 실패 일단 한대 맞아 그리고  10골드를 내놔 " << std::endl;
 			// set gold c->
 			c->takeDamage(tmp->GetAttack());
 			if (c->getHP() <= 0)
 			{
 				CheckThrough = 100;
-				cout << "im BM , you die" << endl;
+				std::cout << "im BM , you die" << std::endl;
 				InvenSelection = 0;
 				fled = false;
 				break;
 			}
 
 			if (c->getGold() < 10) {
-				cout << "돈 없음 플레이어" << endl;
+				std::cout << "돈 없음 플레이어" << std::endl;
 			}
 			c->decreaseGold(10);
 			
@@ -148,7 +148,7 @@ void BattleManager :: Battle(Character *c)
 			break;
 
 		default: 
-			cout << "제대로 번호를 고르세요 " << endl;
+			std::cout << "제대로 번호를 고르세요 " << std::endl;
 			InvenSelection = 0;
 			break;
 		}
@@ -179,7 +179,7 @@ int BattleManager::MonsterBattle(Character* c)
 {
 	int InvenSelection = 1000;
 	shared_ptr<Monster> monster = monsterFactory.CreateMonster(c->getLevel());
-	cout << "일반 몬스터..그르르릉 드장! 내 이름은?!!! : " << monster->GetName() << endl;
+	std::cout << "일반 몬스터..그르르릉 드장! 내 이름은?!!! : " << monster->GetName() << std::endl;
 	int BattleResult = HandleBattle(c, monster);
 	return BattleResult;
 }
@@ -189,7 +189,7 @@ int BattleManager::BossBattle(Character* c)
 	int InvenSelection = 1000;
 	//몬스터 생성
 	shared_ptr<Monster> boss = bossMonsterFactory.CreateBossMonster(c->getLevel());
-	cout << "보스 몬스터..그르르릉 드장! 내 이름은?!!! : " << boss->GetName() << endl;
+	std::cout << "보스 몬스터..그르르릉 드장! 내 이름은?!!! : " << boss->GetName() << std::endl;
 	int BattleResult = HandleBattle(c, boss);
 	return BattleResult;
 
@@ -206,11 +206,11 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 	bool IsDefeat = false;
 
 	while (true) {
-		cout << " //////////////////////" << endl;
+		std::cout << " //////////////////////" << std::endl;
 
 		//기존 CHECK!=0
 		if (IsCreateEvent(30) && CheckThrough == 1 ) {
-			cout << monster->GetName() << " 선 공격!" << endl;
+			std::cout << monster->GetName() << " 선 공격!" << std::endl;
 			//몬스터가 중독공격 &&플레이어 일반 상태
 			//HandlePoison과 중복사용하는 이유는
 			//플레이어 턴에만 중독 데미지를 주기 위해서
@@ -224,19 +224,19 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			{
 				return 2;
 			}
-			cout << "선 공격 후 스테이터스 " << endl;
+			std::cout << "선 공격 후 스테이터스 " << std::endl;
 			c->displayStatus();
 		}
 		PrintSelection();
-		cout << "만일..도망가기를 실패한다면...많이 맞을 수 있소.. 거기에 골드도 떨어지오..\n";
-		cin >> selection;
+		std::cout << "만일..도망가기를 실패한다면...많이 맞을 수 있소.. 거기에 골드도 떨어지오..\n";
+		std::cin >> selection;
 
 		
 
 		switch (selection) {
 		case 1: { // 공격
 			CheckThrough = 1;
-			cout << "플레이어 공격 : " << c->getATK() << endl;
+			std::cout << "플레이어 공격 : " << c->getATK() << std::endl;
 			
 			IsWin = HandlePlayerAttack(c, monster);
 			if (!IsWin && c->getHP() <= 0)
@@ -255,7 +255,7 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 				return 2;
 			}
 			
-			cout << " 1번 선택 후 몬스터한테 맞고 난 뒤의 스테이터스 " << endl;
+			std::cout << " 1번 선택 후 몬스터한테 맞고 난 뒤의 스테이터스 " << std::endl;
 			c->displayStatus();
 
 
@@ -263,8 +263,8 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 		}
 		case 2: { // 아이템 사용
 			c->displayInventory();
-			cout << "사용할 아이템을 고르세요 (인벤토리 닫기는 9): " << endl;
-			cin >> InvenSelection;
+			std::cout << "사용할 아이템을 고르세요 (인벤토리 닫기는 9): " << std::endl;
+			std::cin >> InvenSelection;
 
 			if (InvenSelection == 9) {
 				CheckThrough = 0;
@@ -278,11 +278,11 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			CheckThrough = 1;
 
 			if (IsCreateEvent(50)) {
-				cout << "탈출 성공!" << endl;
+				std::cout << "탈출 성공!" << std::endl;
 				return 3; // 전투 종료 (탈출)
 			}
 
-			cout << "도망 실패! 한 대 맞고 10골드를 잃습니다." << endl;
+			std::cout << "도망 실패! 한 대 맞고 10골드를 잃습니다." << std::endl;
 			IsDefeat = HandleMonsterAttack(c, monster);
 			if (IsDefeat)
 			{
@@ -308,18 +308,18 @@ int BattleManager::HandleBattle(Character* c, shared_ptr<Monster> monster) {
 			break;
 		}
 		default:
-			cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
+			std::cout << "잘못된 선택입니다. 다시 입력해주세요." << std::endl;
 			break;
 		}
 	}
 }
 void BattleManager::PrintSelection() 
 {
-	cout << "1 : 공격 " 
+	std::cout << "1 : 공격 "
 		 <<"   " << "2 : 아이템 사용" // Inventory
 		<< "   " << "3 : 도망가기"
 		<< "   " << "4 : 스테이터스 확인"
-		<< endl;;
+		<< std::endl;;
 }
 bool BattleManager::HandlePlayerAttack(Character* c, shared_ptr<Monster> monster)
 {
@@ -337,22 +337,22 @@ bool BattleManager::HandlePlayerAttack(Character* c, shared_ptr<Monster> monster
 	}
 	monster->TakeDamage(c->getATK());
 	if (monster->GetHealth() <= 0) {
-		cout << "몬스터 처치! 경험치와 골드를 획득했습니다." << endl;
+		std::cout << "몬스터 처치! 경험치와 골드를 획득했습니다." << std::endl;
 		c->setEXP(50);
 
 		int gold = GenerateRandom(10, 20);
 		c->increaseGold(gold);
-		cout << "획득 골드: " << gold << endl;
+		std::cout << "획득 골드: " << gold << std::endl;
 
 		shared_ptr<Item> droppedItem = monster->DropItem();
 		if (droppedItem) {
-			cout << "아이템 획득: " << droppedItem->getName() << "\n";
+			std::cout << "아이템 획득: " << droppedItem->getName() << "\n";
 		}
 		else {
-			cout << "몬스터가 아이템을 드롭하지 않았습니다." << endl;
+			std::cout << "몬스터가 아이템을 드롭하지 않았습니다." << std::endl;
 		}
 		//check
-		cout << "몬스터 사망 후 스테이터스" << endl;
+		std::cout << "몬스터 사망 후 스테이터스" << std::endl;
 		c->displayStatus();
 		return true; // 몬스터 사망
 	}
@@ -366,10 +366,10 @@ bool BattleManager::HandleMonsterAttack(Character* c, shared_ptr<Monster> monste
 		c->setPoison(true); // 플레이어 상태를 중독으로 변경
 	}
 
-	cout << monster->GetName() << " 의 공격 ! 데미지 : "<<monster->GetAttack() << "를 입습니다." << endl;
+	std::cout << monster->GetName() << " 의 공격 ! 데미지 : "<<monster->GetAttack() << "를 입습니다." << std::endl;
 	c->takeDamage(monster->GetAttack());
 	if (c->getHP() <= 0) {
-		cout << "플레이어가 사망했습니다." << endl;
+		std::cout << "플레이어가 사망했습니다." << std::endl;
 		return true; // 플레이어 사망
 	}
 	else return false;

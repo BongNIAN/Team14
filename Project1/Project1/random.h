@@ -6,7 +6,7 @@
 #include <ctime>
 #include <vector>
 #include <string>
-using namespace std;
+
 
 /** 정확성을 위해 랜덤 초기화 */
 void InitializeRandom();
